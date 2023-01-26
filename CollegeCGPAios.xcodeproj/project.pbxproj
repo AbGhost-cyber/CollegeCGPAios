@@ -15,6 +15,13 @@
 		04A5905C298283320041A311 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A5905B298283320041A311 /* Extensions.swift */; };
 		04A59060298284DE0041A311 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A5905F298284DE0041A311 /* MainViewModel.swift */; };
 		04A590632982871E0041A311 /* MainRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A590622982871E0041A311 /* MainRepo.swift */; };
+		04A590652982A0AE0041A311 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A590642982A0AE0041A311 /* HeaderView.swift */; };
+		04A590682982A1F40041A311 /* circular-std-medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 04A590672982A1F40041A311 /* circular-std-medium.ttf */; };
+		04A5906A2982A24E0041A311 /* circular-std-bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 04A590692982A24E0041A311 /* circular-std-bold.ttf */; };
+		04A5906D2982B6B10041A311 /* SegmentedPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A5906C2982B6B00041A311 /* SegmentedPicker.swift */; };
+		04A5906F2982BF530041A311 /* CustomChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A5906E2982BF530041A311 /* CustomChartView.swift */; };
+		04A590712982C6DA0041A311 /* SemesterRowItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A590702982C6DA0041A311 /* SemesterRowItem.swift */; };
+		04A590732982C73F0041A311 /* GPAProgessBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A590722982C73F0041A311 /* GPAProgessBar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +34,14 @@
 		04A5905B298283320041A311 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		04A5905F298284DE0041A311 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		04A590622982871E0041A311 /* MainRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRepo.swift; sourceTree = "<group>"; };
+		04A590642982A0AE0041A311 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		04A590672982A1F40041A311 /* circular-std-medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "circular-std-medium.ttf"; sourceTree = "<group>"; };
+		04A590692982A24E0041A311 /* circular-std-bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "circular-std-bold.ttf"; sourceTree = "<group>"; };
+		04A5906B2982A2B50041A311 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		04A5906C2982B6B00041A311 /* SegmentedPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedPicker.swift; sourceTree = "<group>"; };
+		04A5906E2982BF530041A311 /* CustomChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomChartView.swift; sourceTree = "<group>"; };
+		04A590702982C6DA0041A311 /* SemesterRowItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemesterRowItem.swift; sourceTree = "<group>"; };
+		04A590722982C73F0041A311 /* GPAProgessBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPAProgessBar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +74,7 @@
 		04A5904829827B490041A311 /* CollegeCGPAios */ = {
 			isa = PBXGroup;
 			children = (
+				04A5906B2982A2B50041A311 /* Info.plist */,
 				04A590612982852E0041A311 /* Repo */,
 				04A5905E298284CE0041A311 /* View Models */,
 				04A5905D298284850041A311 /* Views */,
@@ -98,7 +114,13 @@
 		04A5905D298284850041A311 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				04A590662982A1CC0041A311 /* Fonts */,
 				04A5904B29827B490041A311 /* MainView.swift */,
+				04A590642982A0AE0041A311 /* HeaderView.swift */,
+				04A5906C2982B6B00041A311 /* SegmentedPicker.swift */,
+				04A5906E2982BF530041A311 /* CustomChartView.swift */,
+				04A590702982C6DA0041A311 /* SemesterRowItem.swift */,
+				04A590722982C73F0041A311 /* GPAProgessBar.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -117,6 +139,15 @@
 				04A590622982871E0041A311 /* MainRepo.swift */,
 			);
 			path = Repo;
+			sourceTree = "<group>";
+		};
+		04A590662982A1CC0041A311 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				04A590692982A24E0041A311 /* circular-std-bold.ttf */,
+				04A590672982A1F40041A311 /* circular-std-medium.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -177,7 +208,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04A5906A2982A24E0041A311 /* circular-std-bold.ttf in Resources */,
 				04A5905129827B4A0041A311 /* Preview Assets.xcassets in Resources */,
+				04A590682982A1F40041A311 /* circular-std-medium.ttf in Resources */,
 				04A5904E29827B4A0041A311 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -190,11 +223,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				04A59060298284DE0041A311 /* MainViewModel.swift in Sources */,
+				04A590712982C6DA0041A311 /* SemesterRowItem.swift in Sources */,
 				04A5904C29827B490041A311 /* MainView.swift in Sources */,
+				04A5906F2982BF530041A311 /* CustomChartView.swift in Sources */,
+				04A5906D2982B6B10041A311 /* SegmentedPicker.swift in Sources */,
 				04A590632982871E0041A311 /* MainRepo.swift in Sources */,
 				04A5905929827BC00041A311 /* Semester.swift in Sources */,
 				04A5904A29827B490041A311 /* CollegeCGPAiosApp.swift in Sources */,
+				04A590732982C73F0041A311 /* GPAProgessBar.swift in Sources */,
 				04A5905C298283320041A311 /* Extensions.swift in Sources */,
+				04A590652982A0AE0041A311 /* HeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -326,6 +364,7 @@
 				DEVELOPMENT_TEAM = Z2K7G5MR42;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CollegeCGPAios/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -355,6 +394,7 @@
 				DEVELOPMENT_TEAM = Z2K7G5MR42;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CollegeCGPAios/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

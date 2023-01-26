@@ -9,11 +9,13 @@ import Foundation
 
 @MainActor
 class MainViewModel: ObservableObject {
-    @Published var currentSemester: Semester?
+    
+    @Published var currentYear: Year?
     
     @Published var academicYears: [Year] = [] {
-        didSet { saveProgress()}
+        didSet { saveProgress() }
     }
+    
     let repo: MainRepo
     
     init(repo: MainRepo = MainRepoImpl()) {
@@ -30,5 +32,8 @@ class MainViewModel: ObservableObject {
                 print(error.localizedDescription)
             }
         }
+    }
+    func load() {
+        
     }
 }
