@@ -9,41 +9,41 @@ import SwiftUI
 
 struct GPAProgressBar: View {
     @State private var color: Color = .red
-    let semester: Semester
-    let maxGPA:Float = 4.0
+    var gpa: Float
+    let maxGPA: Float = 4.0
     var body: some View {
         ZStack {
             Circle()
                 .stroke(color.opacity(0.4), lineWidth: 8)
             Circle()
-                .trim(from: 0, to: CGFloat(semester.gpa / maxGPA))
+                .trim(from: 0, to: CGFloat(gpa / maxGPA))
                 .stroke(style: .init(lineWidth: 8, lineCap: .round))
                 .scale(x: -1)
                 .foregroundColor(color)
-                .animation(.easeOut, value: semester.gpa / maxGPA)
+                .animation(.easeOut, value: gpa / maxGPA)
                 .rotationEffect(.degrees(90))
             VStack {
-                Text("\(semester.gpa.twoDecimalStr)")
+                Text("\(gpa.twoDecimalStr)")
                     .foregroundColor(.black)
-                    .font(.headline)
+                    .font(.primaryText)
                     .bold()
                 Text("GPA")
                     .foregroundColor(Color(uiColor: .secondaryLabel))
-                    .font(.subheadline)
+                    .font(.secondaryText)
             }.multilineTextAlignment(.center)
                 .onAppear {
-                    if semester.gpa >= 3.0 {
+                    if gpa >= 3.0 {
                         color = .blue
                     } else {
                         color = .red
                     }
                 }
-        }.frame(maxWidth: 70)
+        }.frame(maxWidth: 70, maxHeight: 70)
     }
 }
 
 struct GPAProgessBar_Previews: PreviewProvider {
     static var previews: some View {
-        GPAProgressBar(semester: .init(yearId: "2022", id: UUID().uuidString))
+        GPAProgressBar(gpa: 3.2)
     }
 }

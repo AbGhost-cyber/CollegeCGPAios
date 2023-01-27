@@ -31,15 +31,30 @@ extension Font {
         mediumFontSize(12)
             .weight(.light)
     }
-    static var recentText: Font {
+    static var primaryText: Font {
         mediumFontSize(18)
     }
+    static var primaryBold: Font {
+        boldFontSize(18)
+    }
+    static var secondaryText: Font {
+        mediumFontSize(16)
+            .weight(.thin)
+    }
+    static var listHeaderText: Font {
+        mediumFontSize(14)
+            .weight(.thin)
+    }
     static var emptyChart: Font {
-        recentText
+        primaryText
             .weight(.light)
     }
+    
     private static func mediumFontSize(_ size: CGFloat) -> Font {
         return .custom("CircularStd-Medium", size: size)
+    }
+    private static func boldFontSize(_ size: CGFloat) -> Font {
+        return .custom("CircularStd-Bold", size: size)
     }
 }
 

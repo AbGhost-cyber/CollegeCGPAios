@@ -8,24 +8,26 @@
 import SwiftUI
 
 struct SemesterRowItem: View {
+    let semester: Semester
+    var onClick: ((Semester)->Void)? = nil
     var body: some View {
-        NavigationLink {
-            //Destination
-            Text("Hi")
+        Button {
+            onClick?(semester)
         } label: {
-            //Component
             HStack {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("First Semester")
-                        .font(.headline)
+                    Text(semester.semesterName.capitalized)
+                        .font(.primaryBold)
+                        .lineLimit(2)
                         .foregroundColor(.primary)
-                        .bold()
-                    Text("Maths, Biology, Chemistry")
-                        .font(.subheadline)
+                        
+                    Text(semester.threeCourseNames)
+                        .font(.secondaryText)
+                        .lineLimit(2)
                         .foregroundColor(Color(uiColor: .secondaryLabel))
                 }
                 Spacer()
-                GPAProgressBar(semester: .init(yearId: "2012", id: "123"))
+                GPAProgressBar(gpa: semester.gpa)
             }
         }
     }
@@ -33,6 +35,6 @@ struct SemesterRowItem: View {
 
 struct SemesterRowItem_Previews: PreviewProvider {
     static var previews: some View {
-        SemesterRowItem()
+        SemesterRowItem(semester: Year.years[0].semesters[0])
     }
 }

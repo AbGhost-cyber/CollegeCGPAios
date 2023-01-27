@@ -9,18 +9,19 @@ import SwiftUI
 
 struct HeaderView: View {
     let title: String
+    var clicked:((String) -> Void)? = nil
     var body: some View {
         HStack {
-            Button(action:{}) {
-                icon(name: "line.3.horizontal")
+            Button(action:{clicked?("Search")}) {
+                icon(name: "magnifyingglass")
             }
             Spacer()
             Text(title)
                 .font(.headerTitle)
             Spacer()
             
-            Button(action:{}) {
-                icon(name: "magnifyingglass")
+            Button(action:{clicked?("Add")}) {
+                icon(name: "plus")
             }
         }
     }

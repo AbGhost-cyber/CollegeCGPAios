@@ -19,7 +19,11 @@ struct Year: Codable, Identifiable {
     }
 }
 
-struct Semester: Codable, Identifiable {
+struct Semester: Codable, Identifiable, Hashable, Equatable {
+    static func == (lhs: Semester, rhs: Semester) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
     var courses: [Course] = []
     var semesterName: String = "semester one"
     let yearId: String
@@ -46,7 +50,7 @@ struct Semester: Codable, Identifiable {
     }
 }
 
-struct Course: Codable, Identifiable {
+struct Course: Codable, Identifiable, Hashable {
     let courseName: String
     let creditHours: Float
     let grade: Grade
