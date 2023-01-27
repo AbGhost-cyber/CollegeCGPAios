@@ -21,10 +21,7 @@ enum SheetAction: Identifiable {
     }
 }
 struct MainView: View {
-    @State private var selectedTab = ""
     let tabData = ["Year", "Semester", "Course"]
-    @State var chartOptions = Options(
-        type: "Year", xLabel: "Academic Year", yLabel: "CGPA")
     @State private var activeSheet: SheetAction?
     
     @EnvironmentObject private var mainViewModel: MainViewModel
@@ -40,21 +37,32 @@ struct MainView: View {
                 }
             }
             ScrollView(showsIndicators: false) {
-                SegmentedPicker(selectedTab: $selectedTab, data: tabData)
+                SegmentedPicker(selectedTab: $mainViewModel.currentTab, data: tabData)
                     .padding(.top)
-                MyChartView(data: [], options: $chartOptions)
+                MyChartView(data: mainViewModel.currentChartData, options: $mainViewModel.currentOption, selectedBarValue: $mainViewModel.selectedBarValue)
                     .frame(minHeight: 250)
-                    .padding()
-                    .animation(.easeInOut, value: selectedTab)
+                    .padding([.top, .leading, .trailing])
+                    .animation(.easeInOut, value: mainViewModel.currentTab)
+                if !mainViewModel.selectedBarValue.isEmpty {
+                    HStack {
+                        Text("Selected \(mainViewModel.currentTab): ")
+                            .foregroundColor(Color(uiColor: .secondaryLabel))
+                            .font(.secondaryText)
+                        Text(mainViewModel.selectedBarValue)
+                            .font(.secondaryBold)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.bottom)
+                }
                 HStack {
-                    Text("Recent")
-                        .font(.primaryText)
+                    Text("Recent Semesters")
+                        .font(.primaryBold)
                     Spacer()
                     Button {
                         
                     } label: {
                         Text("View All")
-                            .font(.primaryText)
+                            .font(.primaryBold)
                         Image(systemName: "chevron.right")
                             .font(.caption)
                     }
@@ -78,12 +86,12 @@ struct MainView: View {
                             .stroke(Color.gray.opacity(0.3)))
                         .padding(.bottom, 10)
                     } header: {
-                        let headerText = "\(year.yearName.uppercased()), CGPA: \(year.cgpa.twoDecimalStr)"
-                        Text(headerText)
-                            .frame(maxWidth: .infinity, alignment: .leading)
+                        let header = "\(year.yearName.uppercased()), CGPA: \(year.cgpa.twoDecimalStr)"
+                        Text(header)
                             .font(.listHeaderText)
                             .foregroundColor(Color(uiColor: .secondaryLabel))
                             .padding(.leading)
+                            .frame(maxWidth: .infinity, alignment: .leading)
                     }
                 }
             }
@@ -95,7 +103,7 @@ struct MainView: View {
             }
         }
         .onAppear {
-            selectedTab = tabData[0]
+            mainViewModel.currentTab = tabData[0]
         }
         .padding()
     }

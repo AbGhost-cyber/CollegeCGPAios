@@ -35,9 +35,22 @@ extension Year {
         secSemester.courses.append(Course(courseName: "Data mining", creditHours: 2.5, grade: .D,
                                         color: "blue", semesterId: secSemester.id, id: UUID().uuidString))
         year2.semesters.append(secSemester)
+        
+        var year3 = Year(id: UUID().uuidString, yearName: "Third Year")
+        var secSemester1 = Semester(semesterName: "Third Year, First Semester", yearId: year3.id, id: UUID().uuidString)
+        secSemester1.courses.append(
+            Course(courseName: "Data Science", creditHours: 2.4, grade: .Bplus,
+                   color: "blue", semesterId: secSemester1.id, id: UUID().uuidString)
+        )
+        secSemester1.courses.append(Course(courseName: "Chemistry", creditHours: 2.5, grade: .D,
+                                        color: "blue", semesterId: secSemester1.id, id: UUID().uuidString))
+        secSemester1.courses.append(Course(courseName: "Geography", creditHours: 3.5, grade: .C,
+                                        color: "blue", semesterId: secSemester1.id, id: UUID().uuidString))
+        year3.semesters.append(secSemester1)
          
         years.append(year1)
         years.append(year2)
+        years.append(year3)
         return years
     }
 }

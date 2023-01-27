@@ -14,6 +14,18 @@ extension Array where Element == Float  {
     }
 }
 
+extension Int {
+    var toCustomStr: String {
+        switch self {
+        case 1: return "1st"
+        case 2: return "2nd"
+        case 3: return "3rd"
+        case 4..<20: return "\(self)th"
+        default: return "none"
+        }
+    }
+}
+
 extension Float {
     var twoDecimalStr: String {
         return String(format: "%.2f", self)
@@ -22,39 +34,38 @@ extension Float {
 
 extension Font {
    static var headerTitle: Font {
-        .custom("CircularStd-Bold", size: 21)
+        boldFont(21)
     }
     static var tab: Font {
-        mediumFontSize(21)
+        regularFont(21)
     }
     static var chartAnnotation: Font {
-        mediumFontSize(12)
-            .weight(.light)
+        regularFont(14)
     }
-    static var primaryText: Font {
-        mediumFontSize(18)
-    }
+//    static var primaryText: Font {
+//        boldFont(18)
+//    }
     static var primaryBold: Font {
-        boldFontSize(18)
+        boldFont(18)
     }
     static var secondaryText: Font {
-        mediumFontSize(16)
-            .weight(.thin)
+        regularFont(16)
+    }
+    static var secondaryBold: Font {
+        boldFont(16)
     }
     static var listHeaderText: Font {
-        mediumFontSize(14)
-            .weight(.thin)
+        regularFont(14)
     }
     static var emptyChart: Font {
-        primaryText
-            .weight(.light)
+       regularFont(18)
     }
     
-    private static func mediumFontSize(_ size: CGFloat) -> Font {
-        return .custom("CircularStd-Medium", size: size)
+    private static func regularFont(_ size: CGFloat) -> Font {
+        return .custom("ProximaNova-Regular", size: size)
     }
-    private static func boldFontSize(_ size: CGFloat) -> Font {
-        return .custom("CircularStd-Bold", size: size)
+    private static func boldFont(_ size: CGFloat) -> Font {
+        return .custom("ProximaNova-Bold", size: size)
     }
 }
 

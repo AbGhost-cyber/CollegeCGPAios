@@ -24,8 +24,8 @@ struct GPAProgressBar: View {
                 .rotationEffect(.degrees(90))
             VStack {
                 Text("\(gpa.twoDecimalStr)")
-                    .foregroundColor(.black)
-                    .font(.primaryText)
+                    .foregroundColor(.primary)
+                    .font(.primaryBold)
                     .bold()
                 Text("GPA")
                     .foregroundColor(Color(uiColor: .secondaryLabel))

@@ -19,11 +19,13 @@ struct SemesterRowItem: View {
                     Text(semester.semesterName.capitalized)
                         .font(.primaryBold)
                         .lineLimit(2)
+                        .multilineTextAlignment(.leading)
                         .foregroundColor(.primary)
                         
                     Text(semester.threeCourseNames)
-                        .font(.secondaryText)
+                        .font(.subheadline)
                         .lineLimit(2)
+                        .multilineTextAlignment(.leading)
                         .foregroundColor(Color(uiColor: .secondaryLabel))
                 }
                 Spacer()
