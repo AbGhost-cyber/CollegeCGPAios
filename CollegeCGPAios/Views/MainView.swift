@@ -32,6 +32,7 @@ struct MainView: View {
             HeaderView(title: "Academic Tracker") { which in
                 if which == "Add" {
                     activeSheet = .add
+                    mainViewModel.currentYear = nil
                 }else {
                     //TODO: enable search
                 }
@@ -72,8 +73,9 @@ struct MainView: View {
                 ForEach(Year.years) { year in
                     Section {
                         VStack {
-                            ForEach(Array(year.semesters.enumerated()), id: \.element) { index, semester in
+                            ForEach(Array(year.semesters.enumerated().prefix(2)), id: \.element) { index, semester in
                                 SemesterRowItem(semester: semester) { semester in
+                                    mainViewModel.currentYear = year
                                     activeSheet = .viewCourses(semester)
                                 }
                                 .padding(.horizontal)
@@ -97,8 +99,11 @@ struct MainView: View {
             }
             .sheet(item: $activeSheet) { sheet in
                 switch sheet {
-                case .add: EditCreateSemesterView()
-                case .viewCourses(let semester): EditCreateSemesterView(semester: semester)
+                case .add: SemesterInfoView()
+                        .environmentObject(mainViewModel)
+                case .viewCourses(let semester): SemesterInfoView(semester: semester)
+                        .presentationDetents([.height(560)])
+                        .environmentObject(mainViewModel)
                 }
             }
         }

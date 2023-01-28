@@ -29,6 +29,7 @@ class MainViewModel: ObservableObject {
     
     init(repo: MainRepo = MainRepoImpl()) {
         self.repo = repo
+        load()
     }
     
     
@@ -121,6 +122,21 @@ class MainViewModel: ObservableObject {
             } catch {
                 print(error.localizedDescription)
             }
+        }
+    }
+    
+    func upsertYear() {
+        if let currentYear = currentYear {
+            //check if current year is already in academic years
+            if  let currentYearIndex = academicYears.firstIndex(where: {$0.id == currentYear.id}) {
+                // update the year at the current year index
+                academicYears[currentYearIndex] = currentYear
+            } else {
+                // it is a new operation, so we insert
+                academicYears.append(currentYear)
+            }
+        } else {
+           fatalError("current year shouldn't be nil")
         }
     }
 }

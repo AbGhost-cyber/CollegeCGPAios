@@ -54,7 +54,6 @@ struct Course: Codable, Identifiable, Hashable {
     let courseName: String
     let creditHours: Float
     let grade: Grade
-    let color: String
     let semesterId: String
     let id: String
     

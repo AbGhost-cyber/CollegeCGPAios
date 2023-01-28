@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0446D48A298511F8003BC089 /* CourseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446D489298511F8003BC089 /* CourseView.swift */; };
 		045CDA232984208B00C19375 /* Proxima Nova Font-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 045CDA222984208B00C19375 /* Proxima Nova Font-Bold.otf */; };
 		04A5904A29827B490041A311 /* CollegeCGPAiosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A5904929827B490041A311 /* CollegeCGPAiosApp.swift */; };
 		04A5904C29827B490041A311 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A5904B29827B490041A311 /* MainView.swift */; };
@@ -22,11 +23,12 @@
 		04A590712982C6DA0041A311 /* SemesterRowItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A590702982C6DA0041A311 /* SemesterRowItem.swift */; };
 		04A590732982C73F0041A311 /* GPAProgessBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A590722982C73F0041A311 /* GPAProgessBar.swift */; };
 		04A590752983AA730041A311 /* MockStubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A590742983AA730041A311 /* MockStubs.swift */; };
-		04A590772983BADF0041A311 /* EditCreateSemesterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A590762983BADF0041A311 /* EditCreateSemesterView.swift */; };
+		04A590772983BADF0041A311 /* SemesterInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A590762983BADF0041A311 /* SemesterInfoView.swift */; };
 		04A590812984157A0041A311 /* Proxima Nova Font-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 04A590802984157A0041A311 /* Proxima Nova Font-Regular.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0446D489298511F8003BC089 /* CourseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseView.swift; sourceTree = "<group>"; };
 		045CDA222984208B00C19375 /* Proxima Nova Font-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Proxima Nova Font-Bold.otf"; sourceTree = "<group>"; };
 		04A5904629827B490041A311 /* CollegeCGPAios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CollegeCGPAios.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04A5904929827B490041A311 /* CollegeCGPAiosApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollegeCGPAiosApp.swift; sourceTree = "<group>"; };
@@ -44,7 +46,7 @@
 		04A590702982C6DA0041A311 /* SemesterRowItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemesterRowItem.swift; sourceTree = "<group>"; };
 		04A590722982C73F0041A311 /* GPAProgessBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPAProgessBar.swift; sourceTree = "<group>"; };
 		04A590742983AA730041A311 /* MockStubs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockStubs.swift; sourceTree = "<group>"; };
-		04A590762983BADF0041A311 /* EditCreateSemesterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCreateSemesterView.swift; sourceTree = "<group>"; };
+		04A590762983BADF0041A311 /* SemesterInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemesterInfoView.swift; sourceTree = "<group>"; };
 		04A590802984157A0041A311 /* Proxima Nova Font-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Proxima Nova Font-Regular.otf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -126,7 +128,8 @@
 				04A5906E2982BF530041A311 /* CustomChartView.swift */,
 				04A590702982C6DA0041A311 /* SemesterRowItem.swift */,
 				04A590722982C73F0041A311 /* GPAProgessBar.swift */,
-				04A590762983BADF0041A311 /* EditCreateSemesterView.swift */,
+				04A590762983BADF0041A311 /* SemesterInfoView.swift */,
+				0446D489298511F8003BC089 /* CourseView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -229,7 +232,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				04A59060298284DE0041A311 /* MainViewModel.swift in Sources */,
-				04A590772983BADF0041A311 /* EditCreateSemesterView.swift in Sources */,
+				0446D48A298511F8003BC089 /* CourseView.swift in Sources */,
+				04A590772983BADF0041A311 /* SemesterInfoView.swift in Sources */,
 				04A590712982C6DA0041A311 /* SemesterRowItem.swift in Sources */,
 				04A5904C29827B490041A311 /* MainView.swift in Sources */,
 				04A5906F2982BF530041A311 /* CustomChartView.swift in Sources */,

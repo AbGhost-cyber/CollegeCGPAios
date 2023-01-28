@@ -79,7 +79,7 @@ struct MyChartView: View {
                                 return
                             }
                             if let index = data.firstIndex(where: {$0.title == title}) {
-                                var selectedDatapoint = data[index]
+                                let selectedDatapoint = data[index]
                                 if value <= selectedDatapoint.value {
                                     selectedBarValue = selectedDatapoint.extraName
                                 }

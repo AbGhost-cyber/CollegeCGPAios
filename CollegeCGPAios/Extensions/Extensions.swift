@@ -14,12 +14,23 @@ extension Array where Element == Float  {
     }
 }
 
+extension Semester {
+    var totalCreditHours: Float {
+        self.courses.map { course in
+            course.creditHours
+        }.sum()
+    }
+    var bestCourse: Course? {
+        self.courses.max(by: {$0.grade.rawValue < $1.grade.rawValue})
+    }
+}
+
 extension Int {
     var toCustomStr: String {
         switch self {
-        case 1: return "1st"
-        case 2: return "2nd"
-        case 3: return "3rd"
+        case 1, 21, 31: return "\(self)st"
+        case 2, 22, 32: return "\(self)nd"
+        case 3, 23, 33: return "\(self)rd"
         case 4..<20: return "\(self)th"
         default: return "none"
         }
@@ -42,9 +53,15 @@ extension Font {
     static var chartAnnotation: Font {
         regularFont(14)
     }
-//    static var primaryText: Font {
-//        boldFont(18)
-//    }
+    static var primaryLarge: Font {
+        boldFont(24)
+    }
+    static var gradePoint: Font {
+        regularFont(34)
+    }
+    static var secondaryMedium: Font {
+        regularFont(18)
+    }
     static var primaryBold: Font {
         boldFont(18)
     }
