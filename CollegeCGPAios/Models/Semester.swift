@@ -9,8 +9,8 @@ import Foundation
 
 struct Year: Codable, Identifiable {
     var semesters: [Semester] = []
-    let id: String
-    let yearName: String
+    var id: String
+    var yearName: String
     
     var cgpa: Float {
         let totalGPA = semesters.map { $0.gpa }.sum()
@@ -26,8 +26,8 @@ struct Semester: Codable, Identifiable, Hashable, Equatable {
     
     var courses: [Course] = []
     var semesterName: String = "semester one"
-    let yearId: String
-    let id: String
+    var yearId: String
+    var id: String
     
     var gpa: Float {
         let totalHours = courses.map { $0.creditHours }.sum()
@@ -51,11 +51,11 @@ struct Semester: Codable, Identifiable, Hashable, Equatable {
 }
 
 struct Course: Codable, Identifiable, Hashable {
-    let courseName: String
-    let creditHours: Float
-    let grade: Grade
-    let semesterId: String
-    let id: String
+    var courseName: String
+    var creditHours: Float
+    var grade: Grade
+    var semesterId: String
+    var id: String
     
     var qualityPoint: Float {
         return creditHours * grade.rawValue

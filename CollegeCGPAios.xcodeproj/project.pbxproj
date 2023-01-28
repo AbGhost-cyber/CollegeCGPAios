@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		0446D48A298511F8003BC089 /* CourseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446D489298511F8003BC089 /* CourseView.swift */; };
+		0446D48C29854FC5003BC089 /* EditCreateSemesterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446D48B29854FC5003BC089 /* EditCreateSemesterView.swift */; };
+		0446D48E29855057003BC089 /* CustomIconBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446D48D29855057003BC089 /* CustomIconBackground.swift */; };
+		0446D490298563D6003BC089 /* FloatingActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446D48F298563D6003BC089 /* FloatingActionButton.swift */; };
+		0446D49229856971003BC089 /* CreateCourseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446D49129856971003BC089 /* CreateCourseView.swift */; };
 		045CDA232984208B00C19375 /* Proxima Nova Font-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 045CDA222984208B00C19375 /* Proxima Nova Font-Bold.otf */; };
 		04A5904A29827B490041A311 /* CollegeCGPAiosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A5904929827B490041A311 /* CollegeCGPAiosApp.swift */; };
 		04A5904C29827B490041A311 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A5904B29827B490041A311 /* MainView.swift */; };
@@ -29,6 +33,10 @@
 
 /* Begin PBXFileReference section */
 		0446D489298511F8003BC089 /* CourseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseView.swift; sourceTree = "<group>"; };
+		0446D48B29854FC5003BC089 /* EditCreateSemesterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCreateSemesterView.swift; sourceTree = "<group>"; };
+		0446D48D29855057003BC089 /* CustomIconBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomIconBackground.swift; sourceTree = "<group>"; };
+		0446D48F298563D6003BC089 /* FloatingActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingActionButton.swift; sourceTree = "<group>"; };
+		0446D49129856971003BC089 /* CreateCourseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCourseView.swift; sourceTree = "<group>"; };
 		045CDA222984208B00C19375 /* Proxima Nova Font-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Proxima Nova Font-Bold.otf"; sourceTree = "<group>"; };
 		04A5904629827B490041A311 /* CollegeCGPAios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CollegeCGPAios.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04A5904929827B490041A311 /* CollegeCGPAiosApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollegeCGPAiosApp.swift; sourceTree = "<group>"; };
@@ -130,6 +138,10 @@
 				04A590722982C73F0041A311 /* GPAProgessBar.swift */,
 				04A590762983BADF0041A311 /* SemesterInfoView.swift */,
 				0446D489298511F8003BC089 /* CourseView.swift */,
+				0446D48B29854FC5003BC089 /* EditCreateSemesterView.swift */,
+				0446D48D29855057003BC089 /* CustomIconBackground.swift */,
+				0446D48F298563D6003BC089 /* FloatingActionButton.swift */,
+				0446D49129856971003BC089 /* CreateCourseView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -232,13 +244,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				04A59060298284DE0041A311 /* MainViewModel.swift in Sources */,
+				0446D49229856971003BC089 /* CreateCourseView.swift in Sources */,
 				0446D48A298511F8003BC089 /* CourseView.swift in Sources */,
 				04A590772983BADF0041A311 /* SemesterInfoView.swift in Sources */,
 				04A590712982C6DA0041A311 /* SemesterRowItem.swift in Sources */,
 				04A5904C29827B490041A311 /* MainView.swift in Sources */,
 				04A5906F2982BF530041A311 /* CustomChartView.swift in Sources */,
+				0446D48C29854FC5003BC089 /* EditCreateSemesterView.swift in Sources */,
 				04A5906D2982B6B10041A311 /* SegmentedPicker.swift in Sources */,
+				0446D490298563D6003BC089 /* FloatingActionButton.swift in Sources */,
 				04A590632982871E0041A311 /* MainRepo.swift in Sources */,
+				0446D48E29855057003BC089 /* CustomIconBackground.swift in Sources */,
 				04A5905929827BC00041A311 /* Semester.swift in Sources */,
 				04A5904A29827B490041A311 /* CollegeCGPAiosApp.swift in Sources */,
 				04A590732982C73F0041A311 /* GPAProgessBar.swift in Sources */,

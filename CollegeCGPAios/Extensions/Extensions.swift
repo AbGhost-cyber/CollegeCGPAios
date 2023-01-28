@@ -25,6 +25,13 @@ extension Semester {
     }
 }
 
+extension Color {
+    static var random: Color {
+        let colors = [blue, pink, pink, accentColor, orange, mint, teal, indigo, red, green]
+        return colors.randomElement()!
+    }
+}
+
 extension Int {
     var toCustomStr: String {
         switch self {

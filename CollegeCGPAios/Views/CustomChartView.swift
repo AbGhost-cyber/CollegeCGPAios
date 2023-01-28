@@ -33,14 +33,14 @@ struct MyChartView: View {
                         y: .value("Value 2", datapoint.value)
                 )
                 .foregroundStyle(color)
-                .annotation(position: .top) {
-                    Text(datapoint.value.twoDecimalStr)
-                        .font(.chartAnnotation)
-                }
+//                .annotation(position: .top) {
+//                    Text(datapoint.value.twoDecimalStr)
+//                        .font(.chartAnnotation)
+//                }
             }
         }
         .chartYAxis {
-            AxisMarks(position: .leading, values: .stride(by: 1.5)) { value in
+            AxisMarks(position: .leading, values: .automatic) { value in
                 AxisGridLine()
                 if let value = value.as(Float.self) {
                     AxisValueLabel {

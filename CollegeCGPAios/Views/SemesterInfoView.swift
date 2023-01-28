@@ -59,8 +59,9 @@ struct SemesterInfoView: View {
             Text("All Courses")
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .font(.primaryLarge)
+                .padding(.bottom)
            courseListView
-                .padding(.vertical, 8)
+               
         }
     }
     
@@ -113,11 +114,11 @@ struct SemesterInfoView: View {
                     .lineLimit(2)
                 Spacer()
                 if !state.currentYearName.isEmpty {
-                    button(name: "pencil.line") {
+                    CustomIconBackground(systemName: "pencil.line") {
                         
                     }
                 }
-                button(name: "xmark") {
+                CustomIconBackground(systemName: "xmark") {
                     dismiss()
                 }
             }
@@ -126,23 +127,6 @@ struct SemesterInfoView: View {
                 .multilineTextAlignment(.leading)
                 .lineLimit(2)
         }
-    }
-    
-    private func button(name: String, action: @escaping()-> Void) -> some View {
-        Button {
-            action()
-        } label: {
-            Circle()
-                .frame(width: 36)
-                .foregroundColor(.gray.opacity(0.1))
-                .overlay {
-                    Image(systemName: name)
-                        .font(.system(size: 18).bold())
-                        .foregroundColor(Color(uiColor: .secondaryLabel))
-                }
-        }
-        .buttonStyle(.plain)
-        
     }
 }
 
