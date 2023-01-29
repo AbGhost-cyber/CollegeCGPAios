@@ -7,17 +7,21 @@
 
 import SwiftUI
 
-struct FloatingActionButton: View {
-    var action: (() -> Void)?
+struct NavigateAbleIcon<Content: View, Label: View>: View {
+    private let destination: Content
+    private let mLabel: Label
+    
+    init(@ViewBuilder destination: () -> Content, @ViewBuilder label: () -> Label) {
+        self.destination = destination()
+        self.mLabel = label()
+    }
     var body: some View {
-        Button {
-            action?()
-        } label: {
-            Image(systemName: "plus.circle.fill")
-                .font(.system(size: 60))
-                .foregroundColor(.purple)
-                .shadow(color: .gray, radius: 0.2, x: 1, y: 1)
-                .padding()
+        NavigationStack {
+            NavigationLink {
+                destination
+            } label: {
+               mLabel
+            }
         }
 
     }
@@ -25,6 +29,10 @@ struct FloatingActionButton: View {
 
 struct FloatingActionButton_Previews: PreviewProvider {
     static var previews: some View {
-        FloatingActionButton()
+        NavigateAbleIcon {
+            CreateCourseView()
+        } label: {
+            EmptyView()
+        }
     }
 }

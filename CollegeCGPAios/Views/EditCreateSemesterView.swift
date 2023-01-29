@@ -51,7 +51,7 @@ struct EditCreateSemesterView: View {
                     CustomIconBackground(systemName: "checkmark") {
                         upsertSemester()
                     }.disabled(state.semesterName.isEmpty)
-                }
+                }.padding([.horizontal, .top], 10)
                 Section {
                     TextField("Input semester name", text: $state.semesterName)
                         .font(.secondaryMedium)
@@ -64,13 +64,28 @@ struct EditCreateSemesterView: View {
                 } footer: {
                     Text("endeavor to keep the semester name unique else the data will be overidden in chart.")
                         .font(.chartAnnotation)
-                }.padding(.top)
-                
+                }
+                .padding(.top)
+                .padding(.horizontal, 10)
                 ScrollView {
-
-                }.overlay(alignment: .bottomTrailing) {
+                    Text("All Courses")
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .font(.primaryLarge)
+                        .padding(.bottom, 10)
+                    //MARK: course list
+                    ForEach(state.courses) { course in
+                        CourseView(course: course)
+                            .padding(.vertical, 10)
+                    }
+                }
+                .padding()
+                .frame(maxWidth: .infinity)
+                .overlay(alignment: .bottomTrailing) {
                     NavigateAbleIcon {
-                        CreateCourseView()
+                        if !state.semesterName.isEmpty {
+                            CreateCourseView()
+                                .presentationDetents([.large])
+                        }
                     } label: {
                         Image(systemName: "plus.circle.fill")
                             .symbolRenderingMode(.palette)
@@ -86,8 +101,14 @@ struct EditCreateSemesterView: View {
                     }
 
                 }
+                .overlay {
+                    if state.courses.isEmpty {
+                        Text("No course added yet")
+                            .font(.emptyChart)
+                            .foregroundColor(Color(uiColor: .secondaryLabel))
+                    }
+                }
             }
-            .padding()
             .confirmationDialog("Cancel Operation?", isPresented: $state.showCancelDialog) {
                 Button("Proceed", role: .destructive) {
                     viewmodel.currentYear = nil
@@ -113,7 +134,7 @@ struct EditCreateSemesterView: View {
         }
     }
     
-    func upsertSemester() {
+    func upsertSemester(shouldClearCache: Bool = false) {
         var semester = state.currentSemester
         if semester.id.isEmpty {
             semester.id = UUID().uuidString
@@ -122,7 +143,10 @@ struct EditCreateSemesterView: View {
         //update to viewmodel
         viewmodel.currentSemester = semester
         viewmodel.upsertSemester()
-        dismiss()
+        if shouldClearCache {
+            viewmodel.clearCache()
+            dismiss()
+        }
     }
     
     func runToolTipVisibility() {

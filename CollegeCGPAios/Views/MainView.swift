@@ -40,12 +40,16 @@ struct MainView: View {
                 }
             }
             ScrollView(showsIndicators: false) {
+                //MARK: Picker
                 SegmentedPicker(selectedTab: $mainViewModel.currentTab, data: tabData)
                     .padding(.top)
+                //MARK: Chart view
                 MyChartView(data: mainViewModel.currentChartData, options: $mainViewModel.currentOption, selectedBarValue: $mainViewModel.selectedBarValue)
                     .frame(minHeight: 250)
                     .padding([.top, .leading, .trailing])
                     .animation(.easeInOut, value: mainViewModel.currentTab)
+                
+                //MARK: selected bar value
                 if !mainViewModel.selectedBarValue.isEmpty {
                     HStack {
                         Text("Selected \(mainViewModel.currentTab): ")

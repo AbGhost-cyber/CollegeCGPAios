@@ -13,7 +13,11 @@ class MainViewModel: ObservableObject {
     @Published var currentYear: Year?
     @Published var currentSemester: Semester?
     
-    @Published var academicYears: [Year] = []
+    @Published var academicYears: [Year] = [] {
+        didSet {
+            mapChartDataAndSetOption()
+        }
+    }
     @Published var selectedBarValue: String = ""
     
     let repo: MainRepo
@@ -47,19 +51,19 @@ class MainViewModel: ObservableObject {
         
         switch currentTab {
         case "Year":
-            let yearlyData = Year.years.map { year in
+            let yearlyData = academicYears.map { year in
                 ChartDataPoint(
                     title: year.yearName,
                     value: year.cgpa,
                     extraName: year.yearName,
                     id: year.id)
             }
-            self.currentChartData = yearlyData
+            self.currentChartData = yearlyData.filter({$0.value > 0.0})
             setOptionXYLabel(xLabel: "Year (Academic)", yLabel: "CGPA")
         case "Semester":
             var datapoints = [ChartDataPoint]()
             var allSemesters = [Semester]()
-            Year.years.forEach { year in
+            academicYears.forEach { year in
                 year.semesters.forEach { semester in
                     allSemesters.append(semester)
                 }
@@ -74,12 +78,12 @@ class MainViewModel: ObservableObject {
                 datapoints.append(datapoint)
             }
             
-            self.currentChartData = datapoints
+            self.currentChartData = datapoints.filter({$0.value > 0.0})
             setOptionXYLabel(xLabel: "All Semesters", yLabel: "GPA")
         case "Course":
             var datapoints = [ChartDataPoint]()
             var allCourses = [Course]()
-            Year.years.forEach { year in
+            academicYears.forEach { year in
                 year.semesters.forEach { semester in
                     allCourses.append(contentsOf: semester.courses)
                 }
@@ -93,7 +97,7 @@ class MainViewModel: ObservableObject {
                     id: course.id)
                 datapoints.append(datapoint)
             }
-            self.currentChartData = datapoints
+            self.currentChartData = datapoints.filter({$0.value > 0.0})
             setOptionXYLabel(xLabel: "All Courses", yLabel: "Grade")
             //TODO: add course filter
         default:
@@ -151,7 +155,6 @@ class MainViewModel: ObservableObject {
             }
             self.currentYear = currentYear
             upsertYear()
-            clearCache()
         } else {
            fatalError("current year and semester shouldn't be nil")
         }
