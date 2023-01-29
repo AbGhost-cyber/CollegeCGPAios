@@ -8,12 +8,12 @@
 import SwiftUI
 
 enum SheetAction: Identifiable {
-    case viewCourses(Semester)
+    case viewCourses
     case addSemester
     
     var id: Int {
         switch self {
-        case .viewCourses(_):
+        case .viewCourses:
             return 1
         case .addSemester:
             return 2
@@ -72,13 +72,14 @@ struct MainView: View {
                 }.padding(.bottom)
                 
                 //MARK: semester list & year section
-                ForEach(Year.years.prefix(2)) { year in
+                ForEach(mainViewModel.academicYears) { year in
                     Section {
                         VStack {
                             ForEach(Array(year.semesters.enumerated().prefix(2)), id: \.element) { index, semester in
                                 SemesterRowItem(semester: semester) { semester in
                                     mainViewModel.currentYear = year
-                                    activeSheet = .viewCourses(semester)
+                                    mainViewModel.currentSemester = semester
+                                    activeSheet = .viewCourses
                                 }
                                 .padding(.horizontal)
                                 .padding(.vertical, 10)
@@ -98,10 +99,17 @@ struct MainView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
                 }
+            }.overlay {
+                if mainViewModel.academicYears.isEmpty {
+                    Text("No Year added yet")
+                        .offset(y: 120)
+                        .font(.emptyChart)
+                        .foregroundColor(Color(uiColor: .secondaryLabel))
+                }
             }
             .sheet(item: $activeSheet) { sheet in
                 switch sheet {
-                case .viewCourses(let semester): SemesterInfoView(semester: semester)
+                case .viewCourses: SemesterInfoView()
                         .presentationDetents([.height(560), .large])
                         .environmentObject(mainViewModel)
                 case .addSemester:
@@ -119,6 +127,8 @@ struct MainView: View {
                     mainViewModel.currentYear = Year(id: UUID().uuidString, yearName: self.yearName)
                    // mainViewModel.saveProgress()
                     activeSheet = .addSemester
+                    //reset name
+                    self.yearName = ""
                 })
                 Button("Cancel", role: .cancel, action: {})
             } message: {

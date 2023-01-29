@@ -52,7 +52,7 @@ extension Year {
         )
         secSemester1.courses.append(Course(courseName: "Chemistry", creditHours: 2.5, grade: .D,
                                            semesterId: secSemester1.id, id: UUID().uuidString))
-        secSemester1.courses.append(Course(courseName: "Geography", creditHours: 3.5, grade: .C,
+        secSemester1.courses.append(Course(courseName: "Mathematics", creditHours: 3.5, grade: .C,
                                            semesterId: secSemester1.id, id: UUID().uuidString))
         year3.semesters.append(secSemester1)
         

@@ -27,7 +27,6 @@ struct CustomIconBackground: View {
         .buttonStyle(.plain)
     }
 }
-
 struct CustomIconBackground_Previews: PreviewProvider {
     static var previews: some View {
         CustomIconBackground(systemName: "plus")

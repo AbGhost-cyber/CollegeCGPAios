@@ -48,6 +48,9 @@ extension Float {
     var twoDecimalStr: String {
         return String(format: "%.2f", self)
     }
+    var oneDecimalStr: String {
+        return String(format: "%.1f", self)
+    }
 }
 
 extension Font {

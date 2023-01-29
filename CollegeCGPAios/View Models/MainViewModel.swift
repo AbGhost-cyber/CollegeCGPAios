@@ -11,6 +11,7 @@ import Foundation
 class MainViewModel: ObservableObject {
     
     @Published var currentYear: Year?
+    @Published var currentSemester: Semester?
     
     @Published var academicYears: [Year] = []
     @Published var selectedBarValue: String = ""
@@ -125,7 +126,7 @@ class MainViewModel: ObservableObject {
         }
     }
     
-    func upsertYear() {
+   private func upsertYear() {
         if let currentYear = currentYear {
             //check if current year is already in academic years
             if  let currentYearIndex = academicYears.firstIndex(where: {$0.id == currentYear.id}) {
@@ -138,5 +139,25 @@ class MainViewModel: ObservableObject {
         } else {
            fatalError("current year shouldn't be nil")
         }
+    }
+    func upsertSemester() {
+        if var currentYear = self.currentYear, let currentSemester = self.currentSemester {
+            if  let semesterIndex = currentYear.semesters.firstIndex(where: {$0.id == currentSemester.id}) {
+                // update the year at the current year index
+                currentYear.semesters[semesterIndex] = currentSemester
+            } else {
+                // it is a new operation, so we insert
+                currentYear.semesters.append(currentSemester)
+            }
+            self.currentYear = currentYear
+            upsertYear()
+            clearCache()
+        } else {
+           fatalError("current year and semester shouldn't be nil")
+        }
+    }
+    func clearCache() {
+        self.currentSemester = nil
+        self.currentYear = nil
     }
 }

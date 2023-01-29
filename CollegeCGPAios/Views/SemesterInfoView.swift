@@ -13,38 +13,38 @@ struct SemesterViewState {
     var currentYearName: String = ""
     var totalCreditHours: Float = 0.0
     var bestCourse: String = ""
+    var semester: Semester = Semester(semesterName: "", yearId: "", id: "")
 }
 struct SemesterInfoView: View {
-    private var semester: Semester? = nil
     @Environment(\.dismiss) private var dismiss
     @State private var state: SemesterViewState = SemesterViewState()
     @EnvironmentObject private var mainViewModel: MainViewModel
-    
-    init(semester: Semester? = nil) {
-        self.semester = semester
-    }
+
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            headerView.padding(.horizontal)
-            Divider()
-                .padding(.vertical, 8)
-                .padding(.horizontal)
-            scrollView
-                .padding(.horizontal)
-        }
-        .padding(.top)
-        .onAppear {
-            if let semester = semester {
-                state.semesterName = semester.semesterName
-                state.courses = semester.courses
-                state.totalCreditHours = semester.totalCreditHours
-                if let bestCourse = semester.bestCourse {
-                    state.bestCourse = bestCourse.courseName
-                }
+        NavigationStack {
+            VStack(alignment: .leading, spacing: 0) {
+                headerView.padding(.horizontal)
+                Divider()
+                    .padding(.vertical, 8)
+                    .padding(.horizontal)
+                scrollView
+                    .padding(.horizontal)
             }
-            if let currentYear = mainViewModel.currentYear {
-                state.currentYearName = currentYear.yearName
+            .padding(.top)
+            .onAppear {
+                if let semester = mainViewModel.currentSemester {
+                    state.semesterName = semester.semesterName
+                    state.courses = semester.courses
+                    state.totalCreditHours = semester.totalCreditHours
+                    state.semester = semester
+                    if let bestCourse = semester.bestCourse {
+                        state.bestCourse = bestCourse.courseName
+                    }
+                }
+                if let currentYear = mainViewModel.currentYear {
+                    state.currentYearName = currentYear.yearName
+                }
             }
         }
     }
@@ -62,6 +62,12 @@ struct SemesterInfoView: View {
                 .padding(.bottom)
            courseListView
                
+        }.overlay {
+            if state.courses.isEmpty {
+                Text("No course added yet")
+                    .font(.emptyChart)
+                    .foregroundColor(Color(uiColor: .secondaryLabel))
+            }
         }
     }
     
@@ -113,12 +119,14 @@ struct SemesterInfoView: View {
                     .multilineTextAlignment(.leading)
                     .lineLimit(2)
                 Spacer()
-                if !state.currentYearName.isEmpty {
-                    CustomIconBackground(systemName: "pencil.line") {
-                        
-                    }
+                NavigateAbleIcon {
+                    EditCreateSemesterView()
+                        .navigationBarBackButtonHidden()
+                } label: {
+                   drawImage("pencil.line")
                 }
-                CustomIconBackground(systemName: "xmark") {
+                drawImage("xmark").onTapGesture {
+                    mainViewModel.clearCache()
                     dismiss()
                 }
             }
@@ -128,6 +136,17 @@ struct SemesterInfoView: View {
                 .lineLimit(2)
         }
     }
+    
+    private func drawImage(_ name: String) -> some View {
+        Circle()
+            .frame(width: 36)
+            .foregroundColor(.gray.opacity(0.1))
+            .overlay {
+                Image(systemName: name)
+                    .font(.system(size: 18).bold())
+                    .foregroundColor(Color(uiColor: .secondaryLabel))
+            }
+    }
 }
 
 struct SemesterInfoView_Previews: PreviewProvider {
@@ -136,7 +155,7 @@ struct SemesterInfoView_Previews: PreviewProvider {
         return vm
     }()
     static var previews: some View {
-        SemesterInfoView(semester: Year.years[0].semesters[0])
+        SemesterInfoView()
             .environmentObject(vm)
     }
 }

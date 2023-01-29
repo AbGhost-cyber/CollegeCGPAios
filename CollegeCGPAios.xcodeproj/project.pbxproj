@@ -12,6 +12,7 @@
 		0446D48E29855057003BC089 /* CustomIconBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446D48D29855057003BC089 /* CustomIconBackground.swift */; };
 		0446D490298563D6003BC089 /* FloatingActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446D48F298563D6003BC089 /* FloatingActionButton.swift */; };
 		0446D49229856971003BC089 /* CreateCourseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446D49129856971003BC089 /* CreateCourseView.swift */; };
+		0446D49829864035003BC089 /* SwiftUITooltip in Frameworks */ = {isa = PBXBuildFile; productRef = 0446D49729864035003BC089 /* SwiftUITooltip */; };
 		045CDA232984208B00C19375 /* Proxima Nova Font-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 045CDA222984208B00C19375 /* Proxima Nova Font-Bold.otf */; };
 		04A5904A29827B490041A311 /* CollegeCGPAiosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A5904929827B490041A311 /* CollegeCGPAiosApp.swift */; };
 		04A5904C29827B490041A311 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A5904B29827B490041A311 /* MainView.swift */; };
@@ -63,6 +64,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0446D49829864035003BC089 /* SwiftUITooltip in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -187,6 +189,9 @@
 			dependencies = (
 			);
 			name = CollegeCGPAios;
+			packageProductDependencies = (
+				0446D49729864035003BC089 /* SwiftUITooltip */,
+			);
 			productName = CollegeCGPAios;
 			productReference = 04A5904629827B490041A311 /* CollegeCGPAios.app */;
 			productType = "com.apple.product-type.application";
@@ -215,6 +220,9 @@
 				Base,
 			);
 			mainGroup = 04A5903D29827B490041A311;
+			packageReferences = (
+				0446D49629864035003BC089 /* XCRemoteSwiftPackageReference "SwiftUI-Tooltip" */,
+			);
 			productRefGroup = 04A5904729827B490041A311 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -463,6 +471,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		0446D49629864035003BC089 /* XCRemoteSwiftPackageReference "SwiftUI-Tooltip" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/quassum/SwiftUI-Tooltip.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0446D49729864035003BC089 /* SwiftUITooltip */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0446D49629864035003BC089 /* XCRemoteSwiftPackageReference "SwiftUI-Tooltip" */;
+			productName = SwiftUITooltip;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 04A5903E29827B490041A311 /* Project object */;
 }

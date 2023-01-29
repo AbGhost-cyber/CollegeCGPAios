@@ -25,7 +25,7 @@ struct Semester: Codable, Identifiable, Hashable, Equatable {
     }
     
     var courses: [Course] = []
-    var semesterName: String = "semester one"
+    var semesterName: String
     var yearId: String
     var id: String
     
@@ -41,6 +41,9 @@ struct Semester: Codable, Identifiable, Hashable, Equatable {
     
     var threeCourseNames: String {
         var list = [String]()
+        if courses.isEmpty {
+            return "no course added yet"
+        }
         courses.forEach { course in
             if list.count < 3 {
                 list.append(course.courseName)
@@ -62,7 +65,8 @@ struct Course: Codable, Identifiable, Hashable {
     }
 }
 
-enum Grade: Float, Codable {
+enum Grade: Float, Codable, CaseIterable, Equatable {
+    
     case Aplus = 4.0
     case Aminus = 3.7
     case Bplus = 3.3
@@ -75,6 +79,9 @@ enum Grade: Float, Codable {
     case D = 1.0
     case F = 0.0
     
+    var id: Grade {
+        self
+    }
     var gradePoints: String {
         switch (self) {
         case .Aplus: return "A+"

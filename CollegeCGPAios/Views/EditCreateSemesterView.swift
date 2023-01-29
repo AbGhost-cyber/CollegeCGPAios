@@ -6,35 +6,54 @@
 //
 
 import SwiftUI
+import SwiftUITooltip
+
 struct YearViewState {
     var year: Year = Year(id: "", yearName: "")
+    var showAddCourse = false
+    var showToolTip = true
+    var showCancelDialog = false
+    var currentSemester = Semester(semesterName: "", yearId: "", id: "")
+    var semesterName: String = ""
+    var courses: [Course] = []
+    var isNew = false
 }
 struct EditCreateSemesterView: View {
+    @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var viewmodel: MainViewModel
     
-    @State private var state: YearViewState = YearViewState()
-    @Environment(\.dismiss) private var dismiss
-    @State private var showAddCourse = false
+    var tooltipConfig = DefaultTooltipConfig()
     
+    @State private var state: YearViewState = YearViewState()
+   
+    
+    
+    init() {
+        self.tooltipConfig.enableAnimation = true
+        self.tooltipConfig.animationTime = 1
+    }
     
     var body: some View {
+        NavigationStack {
             VStack {
                 HStack {
+                    //MARK: cancel button
                     CustomIconBackground(systemName: "xmark") {
-                        dismiss()
+                        state.showCancelDialog = true
                     }
                     Spacer()
-                    Text("Create Semester")
+                    Text(state.isNew ? "Create Semester" : "Edit Semester")
                         .font(.primaryLarge)
                         .multilineTextAlignment(.leading)
                         .lineLimit(2)
                     Spacer()
+                    //MARK: create semester button
                     CustomIconBackground(systemName: "checkmark") {
-                        dismiss()
-                    }
+                        upsertSemester()
+                    }.disabled(state.semesterName.isEmpty)
                 }
                 Section {
-                    TextField("Input semester name", text: $state.year.yearName)
+                    TextField("Input semester name", text: $state.semesterName)
                         .font(.secondaryMedium)
                         .frame(height: 50)
                         .padding(.horizontal)
@@ -50,20 +69,66 @@ struct EditCreateSemesterView: View {
                 ScrollView {
 
                 }.overlay(alignment: .bottomTrailing) {
-                    FloatingActionButton() {
-                        showAddCourse = true
+                    NavigateAbleIcon {
+                        CreateCourseView()
+                    } label: {
+                        Image(systemName: "plus.circle.fill")
+                            .symbolRenderingMode(.palette)
+                            .font(.system(size: 50))
+                            .foregroundStyle(.white, .purple)
+                            //.foregroundColor(.purple)
+                            .shadow(color: .gray, radius: 0.2, x: 1, y: 1)
+                            .padding()
                     }
+                    .tooltip(state.showToolTip, side: .left) {
+                        Text("Click here to add a course")
+                            .font(.secondaryMedium)
+                    }
+
                 }
             }
-            .sheet(isPresented: $showAddCourse) {
-                CreateCourseView()
-            }
             .padding()
+            .confirmationDialog("Cancel Operation?", isPresented: $state.showCancelDialog) {
+                Button("Proceed", role: .destructive) {
+                    viewmodel.currentYear = nil
+                    dismiss()
+                }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("Going back without saving will ignore changes")
+                    .font(.secondaryMedium)
+            }
             .onAppear {
                 if let year = viewmodel.currentYear {
                     state.year = year
+                    state.currentSemester.yearId = year.id
                 }
+                if let semester = viewmodel.currentSemester {
+                    state.currentSemester = semester
+                    state.semesterName = semester.semesterName
+                }
+                state.isNew = viewmodel.currentSemester == nil
+                runToolTipVisibility()
             }
+        }
+    }
+    
+    func upsertSemester() {
+        var semester = state.currentSemester
+        if semester.id.isEmpty {
+            semester.id = UUID().uuidString
+        }
+        semester.semesterName = state.semesterName
+        //update to viewmodel
+        viewmodel.currentSemester = semester
+        viewmodel.upsertSemester()
+        dismiss()
+    }
+    
+    func runToolTipVisibility() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+            state.showToolTip = false
+         }
     }
     
     struct EditCreateSemesterView_Previews: PreviewProvider {
