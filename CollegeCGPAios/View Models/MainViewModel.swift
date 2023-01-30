@@ -10,10 +10,6 @@ import Foundation
 @MainActor
 class MainViewModel: ObservableObject {
     
-//    @Published var currentYear: Year?
-//    @Published var currentSemester: Semester?
-//    @Published var currentCourse: Course?
-    
     @Published var allSemesters: [Semester] = []
     @Published var allCourses: [Course] = []
     
@@ -26,10 +22,11 @@ class MainViewModel: ObservableObject {
     @Published var allYears: [Year] = [] {
         didSet {
             mapChartDataAndSetOption()
+            saveProgress()
         }
     }
     
-    @Published var selectedBarValue: String = ""
+    @Published var selectedChartMark: ChartMarkData = ChartMarkData(name: "", value: 0.0)
     
     let repo: MainRepo
     
@@ -120,7 +117,7 @@ class MainViewModel: ObservableObject {
         // guard !academicYears.isEmpty else { return }
         
         self.currentOption.type = currentTab
-        self.selectedBarValue = ""
+        self.selectedChartMark = ChartMarkData(name: "", value: 0)
         
         switch currentTab {
         case "Year":

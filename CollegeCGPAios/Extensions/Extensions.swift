@@ -32,6 +32,7 @@ extension Color {
     }
 }
 
+
 extension Int {
     var toCustomStr: String {
         switch self {
@@ -50,6 +51,10 @@ extension Float {
     }
     var oneDecimalStr: String {
         return String(format: "%.1f", self)
+    }
+    
+    var convertToGradePoints: String {
+        return Grade.allCases.first(where: {$0.rawValue == self})?.gradePoints ?? "F"
     }
 }
 

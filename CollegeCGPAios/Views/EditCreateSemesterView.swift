@@ -87,7 +87,7 @@ struct EditCreateSemesterView: View {
                 }
                 .padding(.top)
                 .padding(.horizontal, 10)
-                ScrollView {
+                ScrollView(showsIndicators: false) {
                     Text("All Courses")
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .font(.primaryLarge)
@@ -151,7 +151,6 @@ struct EditCreateSemesterView: View {
                         state.semesterName = semester.semesterName
                         state.currentSemester = semester
                         state.semesterId = semester.id
-                        print("name: \(semester.semesterName)")
                     }else {
                         state.semesterId = UUID().uuidString
                     }

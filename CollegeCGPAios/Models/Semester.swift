@@ -23,6 +23,10 @@ struct Semester: Codable, Identifiable, Hashable, Equatable {
     static func == (lhs: Semester, rhs: Semester) -> Bool {
         return lhs.id == rhs.id
     }
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+        hasher.combine(id)
+    }
     
     var courses: [Course] = []
     var semesterName: String
@@ -59,6 +63,14 @@ struct Course: Codable, Identifiable, Hashable {
     var grade: Grade
     var semesterId: String
     var id: String
+    
+    static func == (lhs: Course, rhs: Course) -> Bool {
+        return lhs.id == rhs.id
+    }
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+        hasher.combine(id)
+    }
     
     var qualityPoint: Float {
         return creditHours * grade.rawValue

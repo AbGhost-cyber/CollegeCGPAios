@@ -15,6 +15,10 @@ struct ChartDataPoint: Identifiable, Hashable {
     let extraName: String
     let id: String
 }
+struct ChartMarkData {
+    let name: String
+    let value: Float
+}
 struct Options: Equatable {
     var type: String
     var xLabel: String
@@ -24,19 +28,22 @@ struct Options: Equatable {
 struct MyChartView: View {
     let data: [ChartDataPoint]
     @Binding var options: Options
-    @Binding var selectedBarValue: String
+    @Binding var selectedChartMark: ChartMarkData
     var body: some View {
         Chart {
             ForEach(Array(data.enumerated()), id: \.element) { index, datapoint in
-                let color = selectedBarValue == datapoint.extraName ? Color.primary : Color.blue
-                BarMark(x: .value("Value 1", datapoint.title),
-                        y: .value("Value 2", datapoint.value)
-                )
-                .foregroundStyle(color)
-//                .annotation(position: .top) {
-//                    Text(datapoint.value.twoDecimalStr)
-//                        .font(.chartAnnotation)
-//                }
+                let color = selectedChartMark.name == datapoint.extraName ? Color.primary : Color.blue
+                let useLinePointMark = options.type.contains("Course")
+                if useLinePointMark {
+                    LineMark(x: .value("Value 1", datapoint.title), y: .value("Value 2", datapoint.value))
+                    PointMark(x: .value("Value 1", datapoint.title), y: .value("Value 2", datapoint.value))
+                    .foregroundStyle(color)
+                    
+                } else {
+                    BarMark(x: .value("Value 1", datapoint.title),
+                            y: .value("Value 2", datapoint.value)
+                    ).foregroundStyle(color)
+                }
             }
         }
         .chartYAxis {
@@ -81,7 +88,7 @@ struct MyChartView: View {
                             if let index = data.firstIndex(where: {$0.title == title}) {
                                 let selectedDatapoint = data[index]
                                 if value <= selectedDatapoint.value {
-                                    selectedBarValue = selectedDatapoint.extraName
+                                    selectedChartMark = ChartMarkData(name: selectedDatapoint.extraName, value: selectedDatapoint.value)
                                 }
                                 
                             }

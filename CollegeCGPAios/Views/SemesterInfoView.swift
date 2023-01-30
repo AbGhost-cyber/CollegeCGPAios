@@ -37,7 +37,6 @@ struct SemesterInfoView: View {
             .padding(.top)
             .onAppear {
                 if let semester = mainViewModel.getSemesterById(semesterId) {
-                    print("semester id: \(semester.id)")
                     state.semester = semester
                     state.courses = semester.courses
                     state.totalCreditHours = semester.totalCreditHours

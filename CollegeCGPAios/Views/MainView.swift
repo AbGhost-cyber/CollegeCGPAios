@@ -44,19 +44,36 @@ struct MainView: View {
                         SegmentedPicker(selectedTab: $mainViewModel.currentTab, data: tabData)
                             .padding(.top)
                         //MARK: Chart view
-                        MyChartView(data: mainViewModel.currentChartData, options: $mainViewModel.currentOption, selectedBarValue: $mainViewModel.selectedBarValue)
+                        MyChartView(data: mainViewModel.currentChartData, options: $mainViewModel.currentOption, selectedChartMark: $mainViewModel.selectedChartMark)
                             .frame(minHeight: 250)
                             .padding([.top, .leading, .trailing])
                             .animation(.easeInOut, value: mainViewModel.currentTab)
                         
                         //MARK: selected bar value
-                        if !mainViewModel.selectedBarValue.isEmpty {
-                            HStack {
-                                Text("Selected \(mainViewModel.currentTab): ")
-                                    .foregroundColor(Color(uiColor: .secondaryLabel))
-                                    .font(.secondaryText)
-                                Text(mainViewModel.selectedBarValue)
-                                    .font(.secondaryBold)
+                        if !mainViewModel.selectedChartMark.name.isEmpty {
+                            VStack(alignment: .leading, spacing: 8) {
+                                HStack {
+                                    Text("Highlighted \(mainViewModel.currentTab): ")
+                                        .foregroundColor(Color(uiColor: .secondaryLabel))
+                                        .font(.secondaryText)
+                                        .lineLimit(1)
+                                    Text(mainViewModel.selectedChartMark.name)
+                                        .font(.secondaryBold)
+                                }
+                                HStack {
+                                    Text("\(mainViewModel.currentOption.yLabel): ")
+                                        .foregroundColor(Color(uiColor: .secondaryLabel))
+                                        .font(.secondaryText)
+                                        .lineLimit(1)
+                                    if mainViewModel.currentOption.type == "Course" {
+                                        Text(mainViewModel.selectedChartMark.value.convertToGradePoints)
+                                            .font(.secondaryBold)
+                                    }else {
+                                        Text(mainViewModel.selectedChartMark.value.twoDecimalStr)
+                                            .font(.secondaryBold)
+                                    }
+                                    
+                                }
                             }
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.bottom)
