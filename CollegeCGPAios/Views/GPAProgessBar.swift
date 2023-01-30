@@ -37,6 +37,12 @@ struct GPAProgressBar: View {
                     } else {
                         color = .red
                     }
+                }.onChange(of: gpa) { newValue in
+                    if newValue >= 3.0 {
+                        color = .blue
+                    } else {
+                        color = .red
+                    }
                 }
         }.frame(maxWidth: 70, maxHeight: 70)
     }

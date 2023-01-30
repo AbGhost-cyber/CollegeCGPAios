@@ -10,17 +10,12 @@ import Foundation
 @MainActor
 class MainViewModel: ObservableObject {
     
-    @Published var currentYear: Year?
-    @Published var currentSemester: Semester?
+//    @Published var currentYear: Year?
+//    @Published var currentSemester: Semester?
+//    @Published var currentCourse: Course?
     
-    @Published var academicYears: [Year] = [] {
-        didSet {
-            mapChartDataAndSetOption()
-        }
-    }
-    @Published var selectedBarValue: String = ""
-    
-    let repo: MainRepo
+    @Published var allSemesters: [Semester] = []
+    @Published var allCourses: [Course] = []
     
     @Published var currentTab: String = "" {
         didSet {
@@ -28,13 +23,91 @@ class MainViewModel: ObservableObject {
         }
     }
     
+    @Published var allYears: [Year] = [] {
+        didSet {
+            mapChartDataAndSetOption()
+        }
+    }
+    
+    @Published var selectedBarValue: String = ""
+    
+    let repo: MainRepo
+    
     @Published var currentChartData: [ChartDataPoint] = []
-    @Published var currentOption: Options = Options(
-        type: "Year", xLabel: "Academic Year", yLabel: "CGPA")
+    @Published var currentOption: Options = Options(type: "Year", xLabel: "Academic Year", yLabel: "CGPA")
     
     init(repo: MainRepo = MainRepoImpl()) {
         self.repo = repo
         load()
+    }
+    
+    func getYearById(_ id: String) -> Year? {
+        return allYears.first(where: {$0.id == id})
+    }
+    
+    func getSemesterById(_ id: String) -> Semester? {
+        return allSemesters.first(where: {$0.id == id})
+    }
+    
+    func getCourseById(_ id: String) -> Course? {
+        return allCourses.first(where: {$0.id == id})
+    }
+    
+    func saveYear(_ year: Year) {
+        if getYearById(year.id) != nil {
+            // year exist
+            let index = allYears.firstIndex(where: {$0.id == year.id})!
+            allYears[index] = year
+        } else {
+            //new insert
+            allYears.append(year)
+        }
+    }
+    
+    func upsertSemester(_ semester: Semester) {
+        if getSemesterById(semester.id) != nil {
+            // semester exist
+            let index = allSemesters.firstIndex(where: {$0.id == semester.id})!
+            allSemesters[index] = semester
+        } else {
+            //new insert
+            allSemesters.append(semester)
+        }
+        //update year
+        if var parent = getYearById(semester.yearId) {
+            // year exist, so we find the exact semester else append new
+            if let semesterIndex = parent.semesters.firstIndex(where: {$0.id == semester.id}) {
+                parent.semesters[semesterIndex] = semester
+            }else {
+                parent.semesters.append(semester)
+            }
+            saveYear(parent)
+        } else {
+            // this shouldn't happen
+        }
+    }
+    
+    func upsertCourse(_ course: Course) {
+        if getCourseById(course.id) != nil {
+            // course exist
+            let index = allCourses.firstIndex(where: {$0.id == course.id})!
+            allCourses[index] = course
+        }else {
+            //new insert
+            allCourses.append(course)
+        }
+        //update semester
+        if var parent = getSemesterById(course.semesterId) {
+            // semester exist, so we find the exact course else append new
+            if let courseIndex = parent.courses.firstIndex(where: {$0.id == course.id}) {
+                parent.courses[courseIndex] = course
+            }else {
+                parent.courses.append(course)
+            }
+            upsertSemester(parent)
+        } else {
+            // this shouldn't happen
+        }
     }
     
     
@@ -51,7 +124,7 @@ class MainViewModel: ObservableObject {
         
         switch currentTab {
         case "Year":
-            let yearlyData = academicYears.map { year in
+            let yearlyData = allYears.map { year in
                 ChartDataPoint(
                     title: year.yearName,
                     value: year.cgpa,
@@ -63,7 +136,7 @@ class MainViewModel: ObservableObject {
         case "Semester":
             var datapoints = [ChartDataPoint]()
             var allSemesters = [Semester]()
-            academicYears.forEach { year in
+            allYears.forEach { year in
                 year.semesters.forEach { semester in
                     allSemesters.append(semester)
                 }
@@ -83,7 +156,7 @@ class MainViewModel: ObservableObject {
         case "Course":
             var datapoints = [ChartDataPoint]()
             var allCourses = [Course]()
-            academicYears.forEach { year in
+            allYears.forEach { year in
                 year.semesters.forEach { semester in
                     allCourses.append(contentsOf: semester.courses)
                 }
@@ -111,7 +184,7 @@ class MainViewModel: ObservableObject {
         Task { [weak self] in
             guard let self  = self else { return }
             do {
-                try await repo.saveYear(self.academicYears)
+                try await repo.saveYears(self.allYears)
             } catch {
                 print(error.localizedDescription)
             }
@@ -122,45 +195,17 @@ class MainViewModel: ObservableObject {
         Task { [weak self] in
             guard let self  = self else { return }
             do {
-                let data = try await repo.loadYear()
-                self.academicYears = data
+                let data = try await repo.loadYears()
+                self.allYears = data
+                data.forEach { year in
+                    allSemesters.append(contentsOf: year.semesters)
+                    year.semesters.forEach { semester in
+                        allCourses.append(contentsOf: semester.courses)
+                    }
+                }
             } catch {
                 print(error.localizedDescription)
             }
         }
-    }
-    
-   private func upsertYear() {
-        if let currentYear = currentYear {
-            //check if current year is already in academic years
-            if  let currentYearIndex = academicYears.firstIndex(where: {$0.id == currentYear.id}) {
-                // update the year at the current year index
-                academicYears[currentYearIndex] = currentYear
-            } else {
-                // it is a new operation, so we insert
-                academicYears.append(currentYear)
-            }
-        } else {
-           fatalError("current year shouldn't be nil")
-        }
-    }
-    func upsertSemester() {
-        if var currentYear = self.currentYear, let currentSemester = self.currentSemester {
-            if  let semesterIndex = currentYear.semesters.firstIndex(where: {$0.id == currentSemester.id}) {
-                // update the year at the current year index
-                currentYear.semesters[semesterIndex] = currentSemester
-            } else {
-                // it is a new operation, so we insert
-                currentYear.semesters.append(currentSemester)
-            }
-            self.currentYear = currentYear
-            upsertYear()
-        } else {
-           fatalError("current year and semester shouldn't be nil")
-        }
-    }
-    func clearCache() {
-        self.currentSemester = nil
-        self.currentYear = nil
     }
 }

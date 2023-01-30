@@ -30,7 +30,7 @@ struct NavigateAbleIcon<Content: View, Label: View>: View {
 struct FloatingActionButton_Previews: PreviewProvider {
     static var previews: some View {
         NavigateAbleIcon {
-            CreateCourseView()
+            CreateCourseView(semesterId: "Ok")
         } label: {
             EmptyView()
         }

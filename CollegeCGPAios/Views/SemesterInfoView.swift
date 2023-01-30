@@ -14,11 +14,14 @@ struct SemesterViewState {
     var totalCreditHours: Float = 0.0
     var bestCourse: String = ""
     var semester: Semester = Semester(semesterName: "", yearId: "", id: "")
+    var yearId: String = ""
+    var semesterId: String = ""
 }
 struct SemesterInfoView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var state: SemesterViewState = SemesterViewState()
     @EnvironmentObject private var mainViewModel: MainViewModel
+    let semesterId: String
 
     
     var body: some View {
@@ -33,17 +36,20 @@ struct SemesterInfoView: View {
             }
             .padding(.top)
             .onAppear {
-                if let semester = mainViewModel.currentSemester {
-                    state.semesterName = semester.semesterName
+                if let semester = mainViewModel.getSemesterById(semesterId) {
+                    print("semester id: \(semester.id)")
+                    state.semester = semester
                     state.courses = semester.courses
                     state.totalCreditHours = semester.totalCreditHours
-                    state.semester = semester
+                    state.semesterId = semester.id
+                    state.semesterName = semester.semesterName
                     if let bestCourse = semester.bestCourse {
                         state.bestCourse = bestCourse.courseName
                     }
-                }
-                if let currentYear = mainViewModel.currentYear {
-                    state.currentYearName = currentYear.yearName
+                    if let currentYear = mainViewModel.getYearById(semester.yearId) {
+                        state.currentYearName = currentYear.yearName
+                        state.yearId = currentYear.id
+                    }
                 }
             }
         }
@@ -120,13 +126,12 @@ struct SemesterInfoView: View {
                     .lineLimit(2)
                 Spacer()
                 NavigateAbleIcon {
-                    EditCreateSemesterView()
+                    EditCreateSemesterView(yearId: state.yearId, semesterId: state.semesterId)
                         .navigationBarBackButtonHidden()
                 } label: {
                    drawImage("pencil.line")
                 }
                 drawImage("xmark").onTapGesture {
-                    mainViewModel.clearCache()
                     dismiss()
                 }
             }
@@ -152,10 +157,11 @@ struct SemesterInfoView: View {
 struct SemesterInfoView_Previews: PreviewProvider {
     private static var vm: MainViewModel = {
         let vm = MainViewModel()
+        vm.upsertSemester(Year.years[0].semesters[0])
         return vm
     }()
     static var previews: some View {
-        SemesterInfoView()
+        SemesterInfoView(semesterId: Year.years[0].semesters[0].id)
             .environmentObject(vm)
     }
 }

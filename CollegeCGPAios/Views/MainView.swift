@@ -8,14 +8,14 @@
 import SwiftUI
 
 enum SheetAction: Identifiable {
-    case viewCourses
-    case addSemester
+    case viewCourses(semesterId: String)
+    case addSemester(yearId: String)
     
     var id: Int {
         switch self {
-        case .viewCourses:
+        case .viewCourses(_):
             return 1
-        case .addSemester:
+        case .addSemester(_):
             return 2
         }
     }
@@ -30,121 +30,127 @@ struct MainView: View {
     
     
     var body: some View {
-        VStack {
-            HeaderView(title: "Academic Tracker") { which in
-                if which == "Add" {
-                    showAlert = true
-                    mainViewModel.currentYear = nil
-                }else {
-                    //TODO: enable search
-                }
-            }
-            ScrollView(showsIndicators: false) {
-                //MARK: Picker
-                SegmentedPicker(selectedTab: $mainViewModel.currentTab, data: tabData)
-                    .padding(.top)
-                //MARK: Chart view
-                MyChartView(data: mainViewModel.currentChartData, options: $mainViewModel.currentOption, selectedBarValue: $mainViewModel.selectedBarValue)
-                    .frame(minHeight: 250)
-                    .padding([.top, .leading, .trailing])
-                    .animation(.easeInOut, value: mainViewModel.currentTab)
-                
-                //MARK: selected bar value
-                if !mainViewModel.selectedBarValue.isEmpty {
-                    HStack {
-                        Text("Selected \(mainViewModel.currentTab): ")
-                            .foregroundColor(Color(uiColor: .secondaryLabel))
-                            .font(.secondaryText)
-                        Text(mainViewModel.selectedBarValue)
-                            .font(.secondaryBold)
+        NavigationStack {
+            VStack {
+                    HeaderView(title: "Academic Tracker") { which in
+                        if which == "Add" {
+                            showAlert = true
+                        }else {
+                            //TODO: enable search
+                        }
                     }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.bottom)
-                }
-                HStack {
-                    Text("Recent Semesters")
-                        .font(.primaryBold)
-                    Spacer()
-                    Button {
+                    ScrollView(showsIndicators: false) {
+                        //MARK: Picker
+                        SegmentedPicker(selectedTab: $mainViewModel.currentTab, data: tabData)
+                            .padding(.top)
+                        //MARK: Chart view
+                        MyChartView(data: mainViewModel.currentChartData, options: $mainViewModel.currentOption, selectedBarValue: $mainViewModel.selectedBarValue)
+                            .frame(minHeight: 250)
+                            .padding([.top, .leading, .trailing])
+                            .animation(.easeInOut, value: mainViewModel.currentTab)
                         
-                    } label: {
-                        Text("View All")
-                            .font(.primaryBold)
-                        Image(systemName: "chevron.right")
-                            .font(.caption)
-                    }
-                }.padding(.bottom)
-                
-                //MARK: semester list & year section
-                ForEach(mainViewModel.academicYears) { year in
-                    Section {
-                        VStack {
-                            ForEach(Array(year.semesters.enumerated().prefix(2)), id: \.element) { index, semester in
-                                SemesterRowItem(semester: semester) { semester in
-                                    mainViewModel.currentYear = year
-                                    mainViewModel.currentSemester = semester
-                                    activeSheet = .viewCourses
+                        //MARK: selected bar value
+                        if !mainViewModel.selectedBarValue.isEmpty {
+                            HStack {
+                                Text("Selected \(mainViewModel.currentTab): ")
+                                    .foregroundColor(Color(uiColor: .secondaryLabel))
+                                    .font(.secondaryText)
+                                Text(mainViewModel.selectedBarValue)
+                                    .font(.secondaryBold)
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.bottom)
+                        }
+                        HStack {
+                            Text("Recent Semesters")
+                                .font(.primaryBold)
+                            Spacer()
+                            NavigateAbleIcon {
+                                YearsListView()
+                            } label: {
+                                Text("View All")
+                                    .font(.primaryBold)
+                                Image(systemName: "chevron.right")
+                                    .font(.caption)
+                            }
+                        }.padding(.bottom)
+                        
+                        //MARK: semester list & year section
+                        ForEach(mainViewModel.allYears) { year in
+                            Section {
+                                VStack {
+                                    ForEach(Array(year.semesters.enumerated().prefix(2)), id: \.element) { index, semester in
+                                        SemesterRowItem(semester: semester) { semester in
+                                            activeSheet = .viewCourses(semesterId: semester.id)
+                                        }
+                                        .padding(.horizontal)
+                                        .padding(.vertical, 10)
+                                        Divider()
+                                            .opacity(index == 1 ? 0 : 1)
+                                    }
                                 }
-                                .padding(.horizontal)
-                                .padding(.vertical, 10)
-                                Divider()
-                                    .opacity(index == 1 ? 0 : 1)
+                                .background(RoundedRectangle(cornerRadius: 12)
+                                    .stroke(Color.gray.opacity(0.3)))
+                                .padding(.bottom, 10)
+                            } header: {
+                                let header = "\(year.yearName.uppercased()), CGPA: \(year.cgpa.twoDecimalStr)"
+                                HStack {
+                                    Text(header)
+                                        .font(.listHeaderText)
+                                        .foregroundColor(Color(uiColor: .secondaryLabel))
+                                        .padding(.leading)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                    Text("add new semester")
+                                        .font(.listHeaderText)
+                                        .foregroundColor(.accentColor)
+                                        .onTapGesture {
+                                            activeSheet = .addSemester(yearId: year.id)
+                                        }
+                                }
                             }
                         }
-                        .background(RoundedRectangle(cornerRadius: 12)
-                            .stroke(Color.gray.opacity(0.3)))
-                        .padding(.bottom, 10)
-                    } header: {
-                        let header = "\(year.yearName.uppercased()), CGPA: \(year.cgpa.twoDecimalStr)"
-                        Text(header)
-                            .font(.listHeaderText)
-                            .foregroundColor(Color(uiColor: .secondaryLabel))
-                            .padding(.leading)
-                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }.overlay {
+                        if mainViewModel.allYears.isEmpty {
+                            Text("No Year added yet")
+                                .offset(y: 120)
+                                .font(.emptyChart)
+                                .foregroundColor(Color(uiColor: .secondaryLabel))
+                        }
                     }
-                }
-            }.overlay {
-                if mainViewModel.academicYears.isEmpty {
-                    Text("No Year added yet")
-                        .offset(y: 120)
-                        .font(.emptyChart)
-                        .foregroundColor(Color(uiColor: .secondaryLabel))
-                }
-            }
-            .sheet(item: $activeSheet) { sheet in
-                switch sheet {
-                case .viewCourses: SemesterInfoView()
-                        .presentationDetents([.height(560), .large])
-                        .environmentObject(mainViewModel)
-                case .addSemester:
-                    EditCreateSemesterView()
-                }
-            }
-            .alert("Create Year", isPresented: $showAlert) {
-                TextField("what academic year?", text: $yearName)
-                    .font(.primaryBold)
-                
-                Button("Proceed", action: {
-                    guard !self.yearName.isEmpty else {
-                        return
+                    .sheet(item: $activeSheet) { sheet in
+                        switch sheet {
+                        case .viewCourses(let semesterId): SemesterInfoView(semesterId: semesterId)
+                                .presentationDetents([.height(560), .large])
+                                .environmentObject(mainViewModel)
+                        case .addSemester(let yearId):
+                            EditCreateSemesterView(yearId: yearId)
+                        }
                     }
-                    mainViewModel.currentYear = Year(id: UUID().uuidString, yearName: self.yearName)
-                   // mainViewModel.saveProgress()
-                    activeSheet = .addSemester
-                    //reset name
-                    self.yearName = ""
-                })
-                Button("Cancel", role: .cancel, action: {})
-            } message: {
-                Text("endeavor to keep the year name unique else the data will be overidden in chart.")
-                    .font(.chartAnnotation)
+                    .alert("Create Year", isPresented: $showAlert) {
+                        TextField("what academic year?", text: $yearName)
+                            .font(.primaryBold)
+                        
+                        Button("Proceed", action: {
+                            guard !self.yearName.isEmpty else {
+                                return
+                            }
+                            let year = Year(id: UUID().uuidString, yearName: self.yearName)
+                            mainViewModel.saveYear(year)
+                            activeSheet = .addSemester(yearId: year.id)
+                            self.yearName = ""
+                        })
+                        Button("Cancel", role: .cancel, action: {})
+                    } message: {
+                        Text("endeavor to keep the year name unique else the data will be overidden in chart.")
+                            .font(.chartAnnotation)
+                    }
+                    
+                }
+            .onAppear {
+                mainViewModel.currentTab = tabData[0]
             }
-            
+            .padding()
         }
-        .onAppear {
-            mainViewModel.currentTab = tabData[0]
-        }
-        .padding()
     }
     
 }

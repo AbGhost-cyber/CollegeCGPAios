@@ -9,28 +9,32 @@ import SwiftUI
 import SwiftUITooltip
 
 struct YearViewState {
-    var year: Year = Year(id: "", yearName: "")
     var showAddCourse = false
     var showToolTip = true
     var showCancelDialog = false
     var currentSemester = Semester(semesterName: "", yearId: "", id: "")
     var semesterName: String = ""
-    var courses: [Course] = []
     var isNew = false
+    var courses: [Course] = []
+    var semesterId: String = ""
 }
 struct EditCreateSemesterView: View {
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var viewmodel: MainViewModel
-    
     var tooltipConfig = DefaultTooltipConfig()
-    
     @State private var state: YearViewState = YearViewState()
-   
+    
+    private var yearId: String
+    var semesterId: String? = nil
+    @State private var semesterIdCopy: String?
     
     
-    init() {
+    
+    init(yearId: String, semesterId: String? = nil) {
         self.tooltipConfig.enableAnimation = true
         self.tooltipConfig.animationTime = 1
+        self.yearId = yearId
+        self.semesterId = semesterId
     }
     
     var body: some View {
@@ -39,7 +43,11 @@ struct EditCreateSemesterView: View {
                 HStack {
                     //MARK: cancel button
                     CustomIconBackground(systemName: "xmark") {
-                        state.showCancelDialog = true
+                        if state.semesterName.isEmpty {
+                            state.showCancelDialog = true
+                        } else{
+                            dismiss()
+                        }
                     }
                     Spacer()
                     Text(state.isNew ? "Create Semester" : "Edit Semester")
@@ -50,10 +58,22 @@ struct EditCreateSemesterView: View {
                     //MARK: create semester button
                     CustomIconBackground(systemName: "checkmark") {
                         upsertSemester()
-                    }.disabled(state.semesterName.isEmpty)
-                }.padding([.horizontal, .top], 10)
+                        dismiss()
+                    }
+                    .disabled(state.semesterName.isEmpty)
+                }
+                .padding([.horizontal, .top], 10)
+                
                 Section {
-                    TextField("Input semester name", text: $state.semesterName)
+                    TextField("Input semester name", text: $state.semesterName, onCommit: {
+                        print("committed: \(state.semesterName)")
+                    })
+                        .onChange(of: state.semesterName, perform: { newValue in
+                            if !newValue.isEmpty {
+                                runToolTipVisibility()
+                            }
+                        })
+                        
                         .font(.secondaryMedium)
                         .frame(height: 50)
                         .padding(.horizontal)
@@ -81,25 +101,27 @@ struct EditCreateSemesterView: View {
                 .padding()
                 .frame(maxWidth: .infinity)
                 .overlay(alignment: .bottomTrailing) {
-                    NavigateAbleIcon {
-                        if !state.semesterName.isEmpty {
-                            CreateCourseView()
-                                .presentationDetents([.large])
+                    if !state.semesterName.isEmpty {
+                        NavigateAbleIcon {
+                            CreateCourseView(semesterId: state.semesterId)
+                        } label: {
+                            Image(systemName: "plus.circle.fill")
+                                .symbolRenderingMode(.palette)
+                                .font(.system(size: 50))
+                                .foregroundStyle(.white, .purple)
+                                .shadow(color: .gray, radius: 0.2, x: 1, y: 1)
+                                .padding()
                         }
-                    } label: {
-                        Image(systemName: "plus.circle.fill")
-                            .symbolRenderingMode(.palette)
-                            .font(.system(size: 50))
-                            .foregroundStyle(.white, .purple)
-                            //.foregroundColor(.purple)
-                            .shadow(color: .gray, radius: 0.2, x: 1, y: 1)
-                            .padding()
+                        .simultaneousGesture(TapGesture().onEnded({ _ in
+                            upsertSemester()
+                            semesterIdCopy = state.semesterId
+                        }))
+                        .tooltip(state.showToolTip, side: .left) {
+                            Text("Click here to add a course")
+                                .font(.secondaryMedium)
+                        }
                     }
-                    .tooltip(state.showToolTip, side: .left) {
-                        Text("Click here to add a course")
-                            .font(.secondaryMedium)
-                    }
-
+                    
                 }
                 .overlay {
                     if state.courses.isEmpty {
@@ -111,7 +133,7 @@ struct EditCreateSemesterView: View {
             }
             .confirmationDialog("Cancel Operation?", isPresented: $state.showCancelDialog) {
                 Button("Proceed", role: .destructive) {
-                    viewmodel.currentYear = nil
+                    //TODO: delete year, it will look ugly without semesters
                     dismiss()
                 }
                 Button("Cancel", role: .cancel) {}
@@ -120,39 +142,35 @@ struct EditCreateSemesterView: View {
                     .font(.secondaryMedium)
             }
             .onAppear {
-                if let year = viewmodel.currentYear {
-                    state.year = year
-                    state.currentSemester.yearId = year.id
+                state.isNew = semesterId == nil
+                if viewmodel.getYearById(yearId) != nil {
+                    // semester exist, this is an edit op
+                    let copyOfSemesterId = semesterId ?? semesterIdCopy
+                    if let id = copyOfSemesterId, let semester = viewmodel.getSemesterById(id) {
+                        state.courses = semester.courses
+                        state.semesterName = semester.semesterName
+                        state.currentSemester = semester
+                        state.semesterId = semester.id
+                        print("name: \(semester.semesterName)")
+                    }else {
+                        state.semesterId = UUID().uuidString
+                    }
                 }
-                if let semester = viewmodel.currentSemester {
-                    state.currentSemester = semester
-                    state.semesterName = semester.semesterName
-                }
-                state.isNew = viewmodel.currentSemester == nil
-                runToolTipVisibility()
             }
         }
     }
     
-    func upsertSemester(shouldClearCache: Bool = false) {
-        var semester = state.currentSemester
-        if semester.id.isEmpty {
-            semester.id = UUID().uuidString
-        }
-        semester.semesterName = state.semesterName
-        //update to viewmodel
-        viewmodel.currentSemester = semester
-        viewmodel.upsertSemester()
-        if shouldClearCache {
-            viewmodel.clearCache()
-            dismiss()
-        }
+    func upsertSemester() {
+        let id = state.semesterId
+        var semester = Semester(semesterName: state.semesterName, yearId: yearId, id: id)
+        semester.courses = state.courses
+        viewmodel.upsertSemester(semester)
     }
     
     func runToolTipVisibility() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
             state.showToolTip = false
-         }
+        }
     }
     
     struct EditCreateSemesterView_Previews: PreviewProvider {
@@ -163,12 +181,12 @@ struct EditCreateSemesterView: View {
         
         static var previews: some View {
             Group {
-                EditCreateSemesterView()
+                EditCreateSemesterView(yearId: Year.years[0].id)
                     .preferredColorScheme(.dark)
                     .previewDisplayName("Dark theme")
                     .environmentObject(vm)
                 
-                EditCreateSemesterView()
+                EditCreateSemesterView(yearId: Year.years[0].id)
                     .preferredColorScheme(.light)
                     .previewDisplayName("White theme")
                     .environmentObject(vm)
