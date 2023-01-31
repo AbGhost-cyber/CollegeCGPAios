@@ -58,11 +58,7 @@ struct MyChartView: View {
         }
         .chartYAxisLabel(options.yLabel, position: .trailing, alignment: .center)
         .chartXAxisLabel(options.xLabel, position: .bottom, alignment: .center)
-        .chartXAxis {
-            AxisMarks(values: .automatic) {
-                AxisValueLabel()
-            }
-        }
+        .chartXAxis(.hidden)
         .overlay {
             if data.isEmpty {
                 Text("No chart data")
