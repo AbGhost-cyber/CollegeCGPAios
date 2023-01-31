@@ -17,6 +17,7 @@ struct YearViewState {
     var isNew = false
     var courses: [Course] = []
     var semesterId: String = ""
+    var isLoading = false
 }
 struct EditCreateSemesterView: View {
     @Environment(\.dismiss) private var dismiss
@@ -68,12 +69,11 @@ struct EditCreateSemesterView: View {
                     TextField("Input semester name", text: $state.semesterName, onCommit: {
                         print("committed: \(state.semesterName)")
                     })
-                        .onChange(of: state.semesterName, perform: { newValue in
+                    .onChange(of: state.semesterName, perform: { newValue in
                             if !newValue.isEmpty {
                                 runToolTipVisibility()
                             }
                         })
-                        
                         .font(.secondaryMedium)
                         .frame(height: 50)
                         .padding(.horizontal)
@@ -93,9 +93,16 @@ struct EditCreateSemesterView: View {
                         .font(.primaryLarge)
                         .padding(.bottom, 10)
                     //MARK: course list
-                    ForEach(state.courses) { course in
-                        CourseView(course: course)
-                            .padding(.vertical, 10)
+                    ForEach(Array(state.courses.enumerated()), id: \.element) { index, course in
+                        NavigationLink {
+                            CreateCourseView(semesterId: course.semesterId, courseId: course.id)
+                        } label: {
+                            CourseView(course: course)
+                                .padding(.vertical, 10)
+                            let lastIndex = state.courses.count - 1
+                            Divider().opacity(index == lastIndex ? 0 : 1)
+                        }
+                            
                     }
                 }
                 .padding()
@@ -124,16 +131,19 @@ struct EditCreateSemesterView: View {
                     
                 }
                 .overlay {
-                    if state.courses.isEmpty {
+                    if state.courses.isEmpty && !state.isLoading {
                         Text("No course added yet")
                             .font(.emptyChart)
                             .foregroundColor(Color(uiColor: .secondaryLabel))
+                    }
+                    if state.isLoading {
+                        ProgressView()
                     }
                 }
             }
             .confirmationDialog("Cancel Operation?", isPresented: $state.showCancelDialog) {
                 Button("Proceed", role: .destructive) {
-                    //TODO: delete year, it will look ugly without semesters
+                    viewmodel.deleteYearById(yearId)
                     dismiss()
                 }
                 Button("Cancel", role: .cancel) {}
@@ -147,10 +157,15 @@ struct EditCreateSemesterView: View {
                     // semester exist, this is an edit op
                     let copyOfSemesterId = semesterId ?? semesterIdCopy
                     if let id = copyOfSemesterId, let semester = viewmodel.getSemesterById(id) {
-                        state.courses = semester.courses
                         state.semesterName = semester.semesterName
                         state.currentSemester = semester
                         state.semesterId = semester.id
+                        state.courses = []
+                        state.isLoading = true
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            state.courses = semester.courses
+                            state.isLoading = false
+                        }
                     }else {
                         state.semesterId = UUID().uuidString
                     }

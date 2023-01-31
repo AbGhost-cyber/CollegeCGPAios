@@ -16,6 +16,7 @@ struct SemesterViewState {
     var semester: Semester = Semester(semesterName: "", yearId: "", id: "")
     var yearId: String = ""
     var semesterId: String = ""
+    var isLoading = false
 }
 struct SemesterInfoView: View {
     @Environment(\.dismiss) private var dismiss
@@ -38,7 +39,13 @@ struct SemesterInfoView: View {
             .onAppear {
                 if let semester = mainViewModel.getSemesterById(semesterId) {
                     state.semester = semester
-                    state.courses = semester.courses
+                    state.courses = []
+                    state.isLoading = true
+                    //the reason i delayed this was due to the fact that the state didn't wait for the data from our viewmodel
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        state.courses = semester.courses
+                        state.isLoading = false
+                    }
                     state.totalCreditHours = semester.totalCreditHours
                     state.semesterId = semester.id
                     state.semesterName = semester.semesterName
@@ -68,10 +75,13 @@ struct SemesterInfoView: View {
            courseListView
                
         }.overlay {
-            if state.courses.isEmpty {
+            if state.courses.isEmpty && !state.isLoading {
                 Text("No course added yet")
                     .font(.emptyChart)
                     .foregroundColor(Color(uiColor: .secondaryLabel))
+            }
+            if state.isLoading {
+                ProgressView()
             }
         }
     }

@@ -10,8 +10,8 @@ import Foundation
 @MainActor
 class MainViewModel: ObservableObject {
     
-    @Published var allSemesters: [Semester] = []
-    @Published var allCourses: [Course] = []
+    private var allSemesters: [Semester] = []
+    private var allCourses: [Course] = []
     
     @Published var currentTab: String = "" {
         didSet {
@@ -93,7 +93,7 @@ class MainViewModel: ObservableObject {
             //new insert
             allCourses.append(course)
         }
-        //update semester
+        //        //update semester
         if var parent = getSemesterById(course.semesterId) {
             // semester exist, so we find the exact course else append new
             if let courseIndex = parent.courses.firstIndex(where: {$0.id == course.id}) {
@@ -175,7 +175,14 @@ class MainViewModel: ObservableObject {
         }
     }
     
-    
+    func deleteYearById(_ id: String) {
+        if let year = getYearById(id) {
+            if year.semesters.count == 0 {
+                let index = allYears.firstIndex(where: {$0.id == id})!
+                allYears.remove(at: index)
+            }
+        }
+    }
     
     func saveProgress() {
         Task { [weak self] in

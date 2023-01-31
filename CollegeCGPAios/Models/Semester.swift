@@ -65,8 +65,9 @@ struct Course: Codable, Identifiable, Hashable {
     var id: String
     
     static func == (lhs: Course, rhs: Course) -> Bool {
-        return lhs.id == rhs.id
+        return lhs.id == rhs.id && lhs.semesterId == rhs.semesterId
     }
+    
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
         hasher.combine(id)

@@ -15,8 +15,10 @@ struct CourseView: View {
             VStack(alignment: .leading, spacing: 8) {
                 Text(course.courseName.capitalized)
                     .font(.primaryBold)
+                    .foregroundColor(Color.primary)
                 Text("\(course.creditHours.twoDecimalStr) credit hours")
                     .font(.secondaryText)
+                    .foregroundColor(Color(uiColor: .secondaryLabel))
             }.padding(.leading)
            Spacer()
             Text(course.grade.gradePoints)
