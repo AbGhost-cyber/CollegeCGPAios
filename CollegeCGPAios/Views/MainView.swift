@@ -30,7 +30,7 @@ struct MainView: View {
     
     
     var body: some View {
-        NavigationStack {
+        NavigationView {
             VStack {
                     HeaderView(title: "Academic Tracker") { which in
                         if which == "Add" {
@@ -84,6 +84,7 @@ struct MainView: View {
                             Spacer()
                             NavigateAbleIcon {
                                 YearsListView()
+                                    .navigationTitle("Semesters")
                             } label: {
                                 Text("View All")
                                     .font(.primaryBold)
@@ -93,10 +94,12 @@ struct MainView: View {
                         }.padding(.bottom)
                         
                         //MARK: semester list & year section
-                        ForEach(mainViewModel.allYears) { year in
+                        ForEach(mainViewModel.allYears.indices.prefix(2), id: \.self) { mIndex in
+                            let year = mainViewModel.allYears[mIndex]
                             Section {
                                 VStack {
-                                    ForEach(Array(year.semesters.enumerated().prefix(2)), id: \.element) { index, semester in
+                                    ForEach(year.semesters.indices.prefix(2), id: \.self) { index in
+                                        let semester = year.semesters[index]
                                         SemesterRowItem(semester: semester) { semester in
                                             activeSheet = .viewCourses(semesterId: semester.id)
                                         }

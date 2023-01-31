@@ -16,14 +16,11 @@ struct NavigateAbleIcon<Content: View, Label: View>: View {
         self.mLabel = label()
     }
     var body: some View {
-        NavigationStack {
             NavigationLink {
                 destination
             } label: {
                mLabel
             }
-        }
-
     }
 }
 
