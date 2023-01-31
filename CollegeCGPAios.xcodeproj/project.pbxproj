@@ -21,6 +21,8 @@
 		0446D4B829890E65003BC089 /* Simulator Screen Shot - iPhone 14 Pro Max - 2023-01-31 at 16.43.13.png in Resources */ = {isa = PBXBuildFile; fileRef = 0446D4B129890E65003BC089 /* Simulator Screen Shot - iPhone 14 Pro Max - 2023-01-31 at 16.43.13.png */; };
 		0446D4B929890E65003BC089 /* Simulator Screen Shot - iPhone 14 Pro Max - 2023-01-31 at 16.42.49.png in Resources */ = {isa = PBXBuildFile; fileRef = 0446D4B229890E65003BC089 /* Simulator Screen Shot - iPhone 14 Pro Max - 2023-01-31 at 16.42.49.png */; };
 		0446D4BA29890E65003BC089 /* Simulator Screen Shot - iPhone 14 Pro Max - 2023-01-31 at 16.44.08.png in Resources */ = {isa = PBXBuildFile; fileRef = 0446D4B329890E65003BC089 /* Simulator Screen Shot - iPhone 14 Pro Max - 2023-01-31 at 16.44.08.png */; };
+		0446D4BC29890F97003BC089 /* simulator_screenshot_593B7215-D234-4C80-AFFA-7031CE2BF543.png in Resources */ = {isa = PBXBuildFile; fileRef = 0446D4BB29890F97003BC089 /* simulator_screenshot_593B7215-D234-4C80-AFFA-7031CE2BF543.png */; };
+		0446D4BE29890FAA003BC089 /* simulator_screenshot_447DE04E-59B2-4ED0-9D3A-73A98BABD855.png in Resources */ = {isa = PBXBuildFile; fileRef = 0446D4BD29890FAA003BC089 /* simulator_screenshot_447DE04E-59B2-4ED0-9D3A-73A98BABD855.png */; };
 		045CDA232984208B00C19375 /* Proxima Nova Font-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 045CDA222984208B00C19375 /* Proxima Nova Font-Bold.otf */; };
 		04A5904A29827B490041A311 /* CollegeCGPAiosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A5904929827B490041A311 /* CollegeCGPAiosApp.swift */; };
 		04A5904C29827B490041A311 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A5904B29827B490041A311 /* MainView.swift */; };
@@ -54,6 +56,8 @@
 		0446D4B129890E65003BC089 /* Simulator Screen Shot - iPhone 14 Pro Max - 2023-01-31 at 16.43.13.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Simulator Screen Shot - iPhone 14 Pro Max - 2023-01-31 at 16.43.13.png"; sourceTree = "<group>"; };
 		0446D4B229890E65003BC089 /* Simulator Screen Shot - iPhone 14 Pro Max - 2023-01-31 at 16.42.49.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Simulator Screen Shot - iPhone 14 Pro Max - 2023-01-31 at 16.42.49.png"; sourceTree = "<group>"; };
 		0446D4B329890E65003BC089 /* Simulator Screen Shot - iPhone 14 Pro Max - 2023-01-31 at 16.44.08.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Simulator Screen Shot - iPhone 14 Pro Max - 2023-01-31 at 16.44.08.png"; sourceTree = "<group>"; };
+		0446D4BB29890F97003BC089 /* simulator_screenshot_593B7215-D234-4C80-AFFA-7031CE2BF543.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "simulator_screenshot_593B7215-D234-4C80-AFFA-7031CE2BF543.png"; sourceTree = "<group>"; };
+		0446D4BD29890FAA003BC089 /* simulator_screenshot_447DE04E-59B2-4ED0-9D3A-73A98BABD855.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "simulator_screenshot_447DE04E-59B2-4ED0-9D3A-73A98BABD855.png"; sourceTree = "<group>"; };
 		045CDA222984208B00C19375 /* Proxima Nova Font-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Proxima Nova Font-Bold.otf"; sourceTree = "<group>"; };
 		04A5904629827B490041A311 /* CollegeCGPAios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CollegeCGPAios.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04A5904929827B490041A311 /* CollegeCGPAiosApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollegeCGPAiosApp.swift; sourceTree = "<group>"; };
@@ -92,6 +96,8 @@
 			children = (
 				0446D4AD29890E65003BC089 /* Simulator Screen Shot - iPhone 14 Pro Max - 2023-01-31 at 16.42.38.png */,
 				0446D4B229890E65003BC089 /* Simulator Screen Shot - iPhone 14 Pro Max - 2023-01-31 at 16.42.49.png */,
+				0446D4BB29890F97003BC089 /* simulator_screenshot_593B7215-D234-4C80-AFFA-7031CE2BF543.png */,
+				0446D4BD29890FAA003BC089 /* simulator_screenshot_447DE04E-59B2-4ED0-9D3A-73A98BABD855.png */,
 				0446D4B129890E65003BC089 /* Simulator Screen Shot - iPhone 14 Pro Max - 2023-01-31 at 16.43.13.png */,
 				0446D4B329890E65003BC089 /* Simulator Screen Shot - iPhone 14 Pro Max - 2023-01-31 at 16.44.08.png */,
 				0446D4AF29890E65003BC089 /* Simulator Screen Shot - iPhone 14 Pro Max - 2023-01-31 at 16.44.20.png */,
@@ -271,9 +277,11 @@
 			files = (
 				04A590812984157A0041A311 /* Proxima Nova Font-Regular.otf in Resources */,
 				04A5905129827B4A0041A311 /* Preview Assets.xcassets in Resources */,
+				0446D4BE29890FAA003BC089 /* simulator_screenshot_447DE04E-59B2-4ED0-9D3A-73A98BABD855.png in Resources */,
 				0446D4B829890E65003BC089 /* Simulator Screen Shot - iPhone 14 Pro Max - 2023-01-31 at 16.43.13.png in Resources */,
 				045CDA232984208B00C19375 /* Proxima Nova Font-Bold.otf in Resources */,
 				0446D4BA29890E65003BC089 /* Simulator Screen Shot - iPhone 14 Pro Max - 2023-01-31 at 16.44.08.png in Resources */,
+				0446D4BC29890F97003BC089 /* simulator_screenshot_593B7215-D234-4C80-AFFA-7031CE2BF543.png in Resources */,
 				04A5904E29827B4A0041A311 /* Assets.xcassets in Resources */,
 				0446D4B429890E65003BC089 /* Simulator Screen Shot - iPhone 14 Pro Max - 2023-01-31 at 16.42.38.png in Resources */,
 				0446D4B729890E65003BC089 /* Simulator Screen Shot - iPhone 14 Pro Max - 2023-01-31 at 16.44.34.png in Resources */,
