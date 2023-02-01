@@ -40,9 +40,7 @@ struct YearsListView: View {
             }
             .overlay {
                 if viewmodel.allYears.isEmpty {
-                    Text("No semester added yet")
-                        .font(.emptyChart)
-                        .foregroundColor(Color(uiColor: .secondaryLabel))
+                    EmptyStateView(text: "No semester added yet")
                 }
             }
             .navigationViewStyle(.stack)

@@ -54,27 +54,14 @@ struct CreateCourseView: View {
                 
                 Section {
                     Button("Save") {
-                      saveCourse()
+                        saveCourse()
                     }.font(.primaryBold)
                 }.disabled(state.notValid())
             }
         }
         .background(Color(uiColor: .systemBackground))
         .navigationTitle(state.isNew ? "Create Course": "Edit Course")
-        .onAppear {
-            state.isNew = courseId == nil
-            if viewmodel.getSemesterById(semesterId) != nil {
-                // course exist, this is an edit op
-                if let id = courseId, let course = viewmodel.getCourseById(id) {
-                    state.name = course.courseName
-                    state.creditHours = course.creditHours
-                    state.grade = course.grade
-                    state.id = course.id
-                } else {
-                    state.id = UUID().uuidString
-                }
-            }
-        }
+        .onAppear(perform: doOnAppear)
     }
     private func saveCourse() {
         let course = Course(courseName: state.name,
@@ -83,6 +70,20 @@ struct CreateCourseView: View {
                             semesterId: semesterId, id: state.id)
         viewmodel.upsertCourse(course)
         dismiss()
+    }
+    private func doOnAppear() {
+        state.isNew = courseId == nil
+        if viewmodel.getSemesterById(semesterId) != nil {
+            // course exist, this is an edit op
+            if let id = courseId, let course = viewmodel.getCourseById(id) {
+                state.name = course.courseName
+                state.creditHours = course.creditHours
+                state.grade = course.grade
+                state.id = course.id
+            } else {
+                state.id = UUID().uuidString
+            }
+        }
     }
 }
 

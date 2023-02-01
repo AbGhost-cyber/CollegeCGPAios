@@ -49,6 +49,6 @@ struct SegmentedPicker: View {
 }
 struct PreviewData: PreviewProvider {
     static var previews: some View {
-       HomeView()
+        SegmentedPicker(selectedTab: .constant("One"), data: ["One", "Two", "Three"])
     }
 }

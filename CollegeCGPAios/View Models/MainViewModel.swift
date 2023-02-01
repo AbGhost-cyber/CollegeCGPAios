@@ -12,21 +12,12 @@ class MainViewModel: ObservableObject {
     
     var allSemesters: [Semester] = []
     private var allCourses: [Course] = []
-    @Published var query: String = ""
     
     @Published var currentTab: String = "" {
         didSet {
             mapChartDataAndSetOption()
         }
     }
-    
-    private var trimmedQuery: String {
-        query.trimmingCharacters(in: .whitespacesAndNewlines)
-    }
-    var isSearching: Bool {!trimmedQuery.isEmpty}
-    
-    @Published var currentToken: SearchToken = .year
-    @Published var tokens: [SearchToken] = [.year, .semester, .course]
     
     @Published var allYears: [Year] = [] {
         didSet {
@@ -37,7 +28,7 @@ class MainViewModel: ObservableObject {
     
     @Published var selectedChartMark: ChartMarkData = ChartMarkData(name: "", value: 0.0)
     
-    let repo: MainRepo
+   private let repo: MainRepo
     
     @Published var currentChartData: [ChartDataPoint] = []
     @Published var currentOption: Options = Options(type: "Year", xLabel: "Academic Year", yLabel: "CGPA")
@@ -123,8 +114,6 @@ class MainViewModel: ObservableObject {
     }
     
     func mapChartDataAndSetOption() {
-        // guard !academicYears.isEmpty else { return }
-        
         self.currentOption.type = currentTab
         self.selectedChartMark = ChartMarkData(name: "", value: 0)
         

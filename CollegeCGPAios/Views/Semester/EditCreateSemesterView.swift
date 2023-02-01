@@ -65,28 +65,12 @@ struct EditCreateSemesterView: View {
                 }
                 .padding([.horizontal, .top], 10)
                 
-                Section {
-                    TextField("Input semester name", text: $state.semesterName, onCommit: {
-                        print("committed: \(state.semesterName)")
-                    })
-                    .onChange(of: state.semesterName, perform: { newValue in
-                            if !newValue.isEmpty {
-                                runToolTipVisibility()
-                            }
-                        })
-                        .font(.secondaryMedium)
-                        .frame(height: 50)
-                        .padding(.horizontal)
-                        .overlay {
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(Color.primary)
-                        }
-                } footer: {
-                    Text("endeavor to keep the semester name unique else the data will be overidden in chart.")
-                        .font(.chartAnnotation)
-                }
-                .padding(.top)
-                .padding(.horizontal, 10)
+                //MARK: semester name view
+                semesterNameView
+                    .padding(.top)
+                    .padding(.horizontal, 10)
+                
+                //MARK: course list
                 ScrollView(showsIndicators: false) {
                     Text("All Courses")
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -102,39 +86,17 @@ struct EditCreateSemesterView: View {
                             let lastIndex = state.courses.count - 1
                             Divider().opacity(index == lastIndex ? 0 : 1)
                         }
-                            
+                        
                     }
                 }
                 .padding()
                 .frame(maxWidth: .infinity)
                 .overlay(alignment: .bottomTrailing) {
-                    if !state.semesterName.isEmpty {
-                        NavigateAbleIcon {
-                            CreateCourseView(semesterId: state.semesterId)
-                        } label: {
-                            Image(systemName: "plus.circle.fill")
-                                .symbolRenderingMode(.palette)
-                                .font(.system(size: 50))
-                                .foregroundStyle(.white, .purple)
-                                .shadow(color: .gray, radius: 0.2, x: 1, y: 1)
-                                .padding()
-                        }
-                        .simultaneousGesture(TapGesture().onEnded({ _ in
-                            upsertSemester()
-                            semesterIdCopy = state.semesterId
-                        }))
-                        .tooltip(state.showToolTip, side: .left) {
-                            Text("Click here to add a course")
-                                .font(.secondaryMedium)
-                        }
-                    }
-                    
+                    addCourseIconView
                 }
                 .overlay {
                     if state.courses.isEmpty && !state.isLoading {
-                        Text("No course added yet")
-                            .font(.emptyChart)
-                            .foregroundColor(Color(uiColor: .secondaryLabel))
+                      EmptyStateView(text: "No course added yet")
                     }
                     if state.isLoading {
                         ProgressView()
@@ -151,26 +113,54 @@ struct EditCreateSemesterView: View {
                 Text("Going back without saving will ignore changes")
                     .font(.secondaryMedium)
             }
-            .onAppear {
-                state.isNew = semesterId == nil
-                if viewmodel.getYearById(yearId) != nil {
-                    // semester exist, this is an edit op
-                    let copyOfSemesterId = semesterId ?? semesterIdCopy
-                    if let id = copyOfSemesterId, let semester = viewmodel.getSemesterById(id) {
-                        state.semesterName = semester.semesterName
-                        state.currentSemester = semester
-                        state.semesterId = semester.id
-                        state.courses = []
-                        state.isLoading = true
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                            state.courses = semester.courses
-                            state.isLoading = false
-                        }
-                    }else {
-                        state.semesterId = UUID().uuidString
-                    }
-                }
+            .onAppear(perform: doOnAppear)
+        }
+    }
+    
+    @ViewBuilder
+    private var addCourseIconView: some View {
+        if !state.semesterName.isEmpty {
+            NavigateAbleIcon {
+                CreateCourseView(semesterId: state.semesterId)
+            } label: {
+                Image(systemName: "plus.circle.fill")
+                    .symbolRenderingMode(.palette)
+                    .font(.system(size: 50))
+                    .foregroundStyle(.white, .purple)
+                    .shadow(color: .gray, radius: 0.2, x: 1, y: 1)
+                    .padding()
             }
+            .simultaneousGesture(TapGesture().onEnded({ _ in
+                upsertSemester()
+                semesterIdCopy = state.semesterId
+            }))
+            .tooltip(state.showToolTip, side: .left) {
+                Text("Click here to add a course")
+                    .font(.secondaryMedium)
+            }
+        }
+    }
+    
+    private var semesterNameView: some View {
+        Section {
+            TextField("Input semester name", text: $state.semesterName, onCommit: {
+                print("committed: \(state.semesterName)")
+            })
+            .onChange(of: state.semesterName, perform: { newValue in
+                if !newValue.isEmpty {
+                    runToolTipVisibility()
+                }
+            })
+            .font(.secondaryMedium)
+            .frame(height: 50)
+            .padding(.horizontal)
+            .overlay {
+                RoundedRectangle(cornerRadius: 8)
+                    .stroke(Color.primary)
+            }
+        } footer: {
+            Text("endeavor to keep the semester name unique else the data will be overidden in chart.")
+                .font(.chartAnnotation)
         }
     }
     
@@ -187,24 +177,46 @@ struct EditCreateSemesterView: View {
         }
     }
     
-    struct EditCreateSemesterView_Previews: PreviewProvider {
-        private static var vm: MainViewModel = {
-            let vm = MainViewModel()
-            return vm
-        }()
-        
-        static var previews: some View {
-            Group {
-                EditCreateSemesterView(yearId: Year.years[0].id)
-                    .preferredColorScheme(.dark)
-                    .previewDisplayName("Dark theme")
-                    .environmentObject(vm)
-                
-                EditCreateSemesterView(yearId: Year.years[0].id)
-                    .preferredColorScheme(.light)
-                    .previewDisplayName("White theme")
-                    .environmentObject(vm)
+    func doOnAppear() {
+        state.isNew = semesterId == nil
+        if viewmodel.getYearById(yearId) != nil {
+            // semester exist, this is an edit op
+            let copyOfSemesterId = semesterId ?? semesterIdCopy
+            if let id = copyOfSemesterId, let semester = viewmodel.getSemesterById(id) {
+                state.semesterName = semester.semesterName
+                state.currentSemester = semester
+                state.semesterId = semester.id
+                state.courses = []
+                state.isLoading = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    state.courses = semester.courses
+                    state.isLoading = false
+                }
+            }else {
+                state.semesterId = UUID().uuidString
             }
+        }
+    }
+    
+    
+}
+struct EditCreateSemesterView_Previews: PreviewProvider {
+    private static var vm: MainViewModel = {
+        let vm = MainViewModel()
+        return vm
+    }()
+    
+    static var previews: some View {
+        Group {
+            EditCreateSemesterView(yearId: Year.years[0].id)
+                .preferredColorScheme(.dark)
+                .previewDisplayName("Dark theme")
+                .environmentObject(vm)
+            
+            EditCreateSemesterView(yearId: Year.years[0].id)
+                .preferredColorScheme(.light)
+                .previewDisplayName("White theme")
+                .environmentObject(vm)
         }
     }
 }

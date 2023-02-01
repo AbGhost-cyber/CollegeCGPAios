@@ -23,7 +23,7 @@ struct SemesterInfoView: View {
     @State private var state: SemesterViewState = SemesterViewState()
     @EnvironmentObject private var mainViewModel: MainViewModel
     let semesterId: String
-
+    
     
     var body: some View {
         NavigationStack {
@@ -36,28 +36,7 @@ struct SemesterInfoView: View {
                     .padding(.horizontal)
             }
             .padding(.top)
-            .onAppear {
-                if let semester = mainViewModel.getSemesterById(semesterId) {
-                    state.semester = semester
-                    state.courses = []
-                    state.isLoading = true
-                    //the reason i delayed this was due to the fact that the state didn't wait for the data from our viewmodel
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        state.courses = semester.courses
-                        state.isLoading = false
-                    }
-                    state.totalCreditHours = semester.totalCreditHours
-                    state.semesterId = semester.id
-                    state.semesterName = semester.semesterName
-                    if let bestCourse = semester.bestCourse {
-                        state.bestCourse = bestCourse.courseName
-                    }
-                    if let currentYear = mainViewModel.getYearById(semester.yearId) {
-                        state.currentYearName = currentYear.yearName
-                        state.yearId = currentYear.id
-                    }
-                }
-            }
+            .onAppear(perform: handleOnAppear)
         }
     }
     
@@ -72,13 +51,11 @@ struct SemesterInfoView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .font(.primaryLarge)
                 .padding(.bottom)
-           courseListView
-               
+            courseListView
+            
         }.overlay {
             if state.courses.isEmpty && !state.isLoading {
-                Text("No course added yet")
-                    .font(.emptyChart)
-                    .foregroundColor(Color(uiColor: .secondaryLabel))
+                EmptyStateView(text: "No course added yet")
             }
             if state.isLoading {
                 ProgressView()
@@ -94,7 +71,7 @@ struct SemesterInfoView: View {
             Divider().opacity(index == lastIndex ? 0 : 1)
         }
     }
-
+    
     
     
     
@@ -138,7 +115,7 @@ struct SemesterInfoView: View {
                     EditCreateSemesterView(yearId: state.yearId, semesterId: state.semesterId)
                         .navigationBarBackButtonHidden()
                 } label: {
-                   drawImage("pencil.line")
+                    drawImage("pencil.line")
                 }
                 drawImage("xmark").onTapGesture {
                     dismiss()
@@ -160,6 +137,29 @@ struct SemesterInfoView: View {
                     .font(.system(size: 18).bold())
                     .foregroundColor(Color(uiColor: .secondaryLabel))
             }
+    }
+    
+    private func handleOnAppear() {
+        if let semester = mainViewModel.getSemesterById(semesterId) {
+            state.semester = semester
+            state.courses = []
+            state.isLoading = true
+            //the reason i delayed this was due to the fact that the state didn't wait for the data from our viewmodel
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                state.courses = semester.courses
+                state.isLoading = false
+            }
+            state.totalCreditHours = semester.totalCreditHours
+            state.semesterId = semester.id
+            state.semesterName = semester.semesterName
+            if let bestCourse = semester.bestCourse {
+                state.bestCourse = bestCourse.courseName
+            }
+            if let currentYear = mainViewModel.getYearById(semester.yearId) {
+                state.currentYearName = currentYear.yearName
+                state.yearId = currentYear.id
+            }
+        }
     }
 }
 

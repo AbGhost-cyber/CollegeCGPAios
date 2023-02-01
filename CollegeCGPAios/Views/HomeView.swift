@@ -40,34 +40,10 @@ struct HomeView: View {
                         .animation(.easeInOut, value: mainViewModel.currentTab)
                     
                     //MARK: selected bar value
-                    if !mainViewModel.selectedChartMark.name.isEmpty {
-                        VStack(alignment: .leading, spacing: 8) {
-                            HStack {
-                                Text("Highlighted \(mainViewModel.currentTab): ")
-                                    .foregroundColor(Color(uiColor: .secondaryLabel))
-                                    .font(.secondaryText)
-                                    .lineLimit(1)
-                                Text(mainViewModel.selectedChartMark.name)
-                                    .font(.secondaryBold)
-                            }
-                            HStack {
-                                Text("\(mainViewModel.currentOption.yLabel): ")
-                                    .foregroundColor(Color(uiColor: .secondaryLabel))
-                                    .font(.secondaryText)
-                                    .lineLimit(1)
-                                if mainViewModel.currentOption.type == "Course" {
-                                    Text(mainViewModel.selectedChartMark.value.convertToGradePoints)
-                                        .font(.secondaryBold)
-                                }else {
-                                    Text(mainViewModel.selectedChartMark.value.twoDecimalStr)
-                                        .font(.secondaryBold)
-                                }
-                                
-                            }
-                        }
+                    HighlightedChartInfo(chartMark: mainViewModel.selectedChartMark, currentTab: mainViewModel.currentTab, currentOption: mainViewModel.currentOption)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.bottom)
-                    }
+                    
                     HStack {
                         Text("Recent Semesters")
                             .font(.primaryBold)
@@ -121,10 +97,8 @@ struct HomeView: View {
                     }
                 }.overlay {
                     if mainViewModel.allYears.isEmpty {
-                        Text("No Year added yet")
+                        EmptyStateView(text: "No Year added yet")
                             .offset(y: 120)
-                            .font(.emptyChart)
-                            .foregroundColor(Color(uiColor: .secondaryLabel))
                     }
                 }
                 .sheet(item: $activeSheet) { sheet in
@@ -164,7 +138,6 @@ struct HomeView: View {
             .padding()
         }
     }
-    
 }
 
 struct HomeView_Previews: PreviewProvider {

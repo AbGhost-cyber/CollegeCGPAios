@@ -62,9 +62,7 @@ struct MyChartView: View {
         .chartXAxis(.hidden)
         .overlay {
             if data.isEmpty {
-                Text("No chart data")
-                    .font(.emptyChart)
-                    .foregroundColor(Color(uiColor: .secondaryLabel))
+                EmptyStateView(text: "No chart data")
             }
         }
         .chartOverlay { proxy in

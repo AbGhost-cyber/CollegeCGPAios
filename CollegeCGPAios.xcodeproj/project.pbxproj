@@ -37,6 +37,8 @@
 		04EC47062989242600CD1457 /* simulator_screenshot_F1AE5C7F-326A-4CBB-A707-03C1BE70C701.png in Resources */ = {isa = PBXBuildFile; fileRef = 04EC47052989242600CD1457 /* simulator_screenshot_F1AE5C7F-326A-4CBB-A707-03C1BE70C701.png */; };
 		04EC470A298A6C7B00CD1457 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EC4709298A6C7B00CD1457 /* SearchView.swift */; };
 		04EC470D298A702A00CD1457 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EC470C298A702A00CD1457 /* EmptyStateView.swift */; };
+		04EC470F298A92C700CD1457 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EC470E298A92C700CD1457 /* SearchViewModel.swift */; };
+		04EC4712298AA8C700CD1457 /* HighlightedChartInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EC4711298AA8C700CD1457 /* HighlightedChartInfo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -71,6 +73,8 @@
 		04EC47052989242600CD1457 /* simulator_screenshot_F1AE5C7F-326A-4CBB-A707-03C1BE70C701.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "simulator_screenshot_F1AE5C7F-326A-4CBB-A707-03C1BE70C701.png"; sourceTree = "<group>"; };
 		04EC4709298A6C7B00CD1457 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		04EC470C298A702A00CD1457 /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
+		04EC470E298A92C700CD1457 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		04EC4711298AA8C700CD1457 /* HighlightedChartInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightedChartInfo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +119,7 @@
 		04A5904829827B490041A311 /* CollegeCGPAios */ = {
 			isa = PBXGroup;
 			children = (
+				04A590662982A1CC0041A311 /* Fonts */,
 				0446D4AC29890E59003BC089 /* Screenshots */,
 				04A5906B2982A2B50041A311 /* Info.plist */,
 				04A590612982852E0041A311 /* Repo */,
@@ -157,20 +162,11 @@
 		04A5905D298284850041A311 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				04EC4714298AAE1100CD1457 /* Course */,
+				04EC4713298AADEC00CD1457 /* Semester */,
+				04EC4710298AA8A500CD1457 /* Chart */,
 				04EC470B298A701500CD1457 /* Common */,
-				04A590662982A1CC0041A311 /* Fonts */,
 				04A5904B29827B490041A311 /* HomeView.swift */,
-				04A590642982A0AE0041A311 /* HeaderView.swift */,
-				04A5906C2982B6B00041A311 /* SegmentedPicker.swift */,
-				04A5906E2982BF530041A311 /* CustomChartView.swift */,
-				04A590702982C6DA0041A311 /* SemesterRowItem.swift */,
-				04A590722982C73F0041A311 /* GPAProgessBar.swift */,
-				04A590762983BADF0041A311 /* SemesterInfoView.swift */,
-				0446D489298511F8003BC089 /* CourseView.swift */,
-				0446D48B29854FC5003BC089 /* EditCreateSemesterView.swift */,
-				0446D48D29855057003BC089 /* CustomIconBackground.swift */,
-				0446D48F298563D6003BC089 /* FloatingActionButton.swift */,
-				0446D49129856971003BC089 /* CreateCourseView.swift */,
 				0446D49B29879693003BC089 /* YearsListView.swift */,
 				04EC4709298A6C7B00CD1457 /* SearchView.swift */,
 			);
@@ -181,6 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				04A5905F298284DE0041A311 /* MainViewModel.swift */,
+				04EC470E298A92C700CD1457 /* SearchViewModel.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -205,9 +202,42 @@
 		04EC470B298A701500CD1457 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				0446D48F298563D6003BC089 /* FloatingActionButton.swift */,
+				04A590722982C73F0041A311 /* GPAProgessBar.swift */,
 				04EC470C298A702A00CD1457 /* EmptyStateView.swift */,
+				04A590642982A0AE0041A311 /* HeaderView.swift */,
+				04A5906C2982B6B00041A311 /* SegmentedPicker.swift */,
+				0446D48D29855057003BC089 /* CustomIconBackground.swift */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		04EC4710298AA8A500CD1457 /* Chart */ = {
+			isa = PBXGroup;
+			children = (
+				04A5906E2982BF530041A311 /* CustomChartView.swift */,
+				04EC4711298AA8C700CD1457 /* HighlightedChartInfo.swift */,
+			);
+			path = Chart;
+			sourceTree = "<group>";
+		};
+		04EC4713298AADEC00CD1457 /* Semester */ = {
+			isa = PBXGroup;
+			children = (
+				04A590702982C6DA0041A311 /* SemesterRowItem.swift */,
+				0446D48B29854FC5003BC089 /* EditCreateSemesterView.swift */,
+				04A590762983BADF0041A311 /* SemesterInfoView.swift */,
+			);
+			path = Semester;
+			sourceTree = "<group>";
+		};
+		04EC4714298AAE1100CD1457 /* Course */ = {
+			isa = PBXGroup;
+			children = (
+				0446D489298511F8003BC089 /* CourseView.swift */,
+				0446D49129856971003BC089 /* CreateCourseView.swift */,
+			);
+			path = Course;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -292,11 +322,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04EC470F298A92C700CD1457 /* SearchViewModel.swift in Sources */,
 				04A59060298284DE0041A311 /* MainViewModel.swift in Sources */,
 				0446D49229856971003BC089 /* CreateCourseView.swift in Sources */,
 				0446D48A298511F8003BC089 /* CourseView.swift in Sources */,
 				04A590772983BADF0041A311 /* SemesterInfoView.swift in Sources */,
 				04A590712982C6DA0041A311 /* SemesterRowItem.swift in Sources */,
+				04EC4712298AA8C700CD1457 /* HighlightedChartInfo.swift in Sources */,
 				04A5904C29827B490041A311 /* HomeView.swift in Sources */,
 				04A5906F2982BF530041A311 /* CustomChartView.swift in Sources */,
 				0446D48C29854FC5003BC089 /* EditCreateSemesterView.swift in Sources */,

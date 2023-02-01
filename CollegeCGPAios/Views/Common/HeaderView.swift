@@ -27,7 +27,7 @@ struct HeaderView: View {
     }
     
     @ViewBuilder
-    func icon(name: String) -> some View {
+   private func icon(name: String) -> some View {
         RoundedRectangle(cornerRadius: 6)
             .stroke(.primary.opacity(0.2))
             .foregroundColor(.primary)
@@ -35,7 +35,6 @@ struct HeaderView: View {
             .bold()
             .overlay {
                 Image(systemName: name)
-                    //.renderingMode(.template)
                     .foregroundColor(.primary)
             }
     }
