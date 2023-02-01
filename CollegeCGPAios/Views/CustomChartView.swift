@@ -34,6 +34,7 @@ struct MyChartView: View {
             ForEach(Array(data.enumerated()), id: \.element) { index, datapoint in
                 let color = selectedChartMark.name == datapoint.extraName ? Color.primary : Color.blue
                 let useLinePointMark = options.type.contains("Course")
+                
                 if useLinePointMark {
                     LineMark(x: .value("Value 1", datapoint.title), y: .value("Value 2", datapoint.value))
                     PointMark(x: .value("Value 1", datapoint.title), y: .value("Value 2", datapoint.value))

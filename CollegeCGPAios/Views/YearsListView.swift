@@ -19,7 +19,7 @@ struct YearsListView: View {
                     ForEach(viewmodel.allYears){ year in
                         Section {
                             ForEach(year.semesters) {semester in
-                                SemesterRowItem(semester: semester) { semester in
+                                SemesterRowItem(semester: semester) {
                                     activeSheet = .viewCourses(semesterId: semester.id)
                                 }
                             }

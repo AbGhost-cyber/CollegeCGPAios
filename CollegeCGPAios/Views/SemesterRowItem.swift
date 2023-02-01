@@ -9,10 +9,10 @@ import SwiftUI
 
 struct SemesterRowItem: View {
     let semester: Semester
-    var onClick: ((Semester)->Void)? = nil
+    var onClick: (()->Void)? = nil
     var body: some View {
         Button {
-            onClick?(semester)
+            onClick?()
         } label: {
             HStack {
                 VStack(alignment: .leading, spacing: 4) {

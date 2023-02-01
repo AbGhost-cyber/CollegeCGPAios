@@ -16,7 +16,7 @@
 		0446D49C29879693003BC089 /* YearsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0446D49B29879693003BC089 /* YearsListView.swift */; };
 		045CDA232984208B00C19375 /* Proxima Nova Font-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 045CDA222984208B00C19375 /* Proxima Nova Font-Bold.otf */; };
 		04A5904A29827B490041A311 /* CollegeCGPAiosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A5904929827B490041A311 /* CollegeCGPAiosApp.swift */; };
-		04A5904C29827B490041A311 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A5904B29827B490041A311 /* MainView.swift */; };
+		04A5904C29827B490041A311 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A5904B29827B490041A311 /* HomeView.swift */; };
 		04A5904E29827B4A0041A311 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04A5904D29827B4A0041A311 /* Assets.xcassets */; };
 		04A5905129827B4A0041A311 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04A5905029827B4A0041A311 /* Preview Assets.xcassets */; };
 		04A5905929827BC00041A311 /* Semester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A5905829827BC00041A311 /* Semester.swift */; };
@@ -35,6 +35,8 @@
 		04EC4702298923FE00CD1457 /* simulator_screenshot_9A201DE2-708D-48C1-A71F-7E02C039F88A.png in Resources */ = {isa = PBXBuildFile; fileRef = 04EC4701298923FE00CD1457 /* simulator_screenshot_9A201DE2-708D-48C1-A71F-7E02C039F88A.png */; };
 		04EC47042989241500CD1457 /* simulator_screenshot_10B5A77B-C026-4C7B-8F38-389DBDD623D2.png in Resources */ = {isa = PBXBuildFile; fileRef = 04EC47032989241500CD1457 /* simulator_screenshot_10B5A77B-C026-4C7B-8F38-389DBDD623D2.png */; };
 		04EC47062989242600CD1457 /* simulator_screenshot_F1AE5C7F-326A-4CBB-A707-03C1BE70C701.png in Resources */ = {isa = PBXBuildFile; fileRef = 04EC47052989242600CD1457 /* simulator_screenshot_F1AE5C7F-326A-4CBB-A707-03C1BE70C701.png */; };
+		04EC470A298A6C7B00CD1457 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EC4709298A6C7B00CD1457 /* SearchView.swift */; };
+		04EC470D298A702A00CD1457 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EC470C298A702A00CD1457 /* EmptyStateView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,7 +49,7 @@
 		045CDA222984208B00C19375 /* Proxima Nova Font-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Proxima Nova Font-Bold.otf"; sourceTree = "<group>"; };
 		04A5904629827B490041A311 /* CollegeCGPAios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CollegeCGPAios.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04A5904929827B490041A311 /* CollegeCGPAiosApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollegeCGPAiosApp.swift; sourceTree = "<group>"; };
-		04A5904B29827B490041A311 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		04A5904B29827B490041A311 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		04A5904D29827B4A0041A311 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		04A5905029827B4A0041A311 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		04A5905829827BC00041A311 /* Semester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Semester.swift; sourceTree = "<group>"; };
@@ -67,6 +69,8 @@
 		04EC4701298923FE00CD1457 /* simulator_screenshot_9A201DE2-708D-48C1-A71F-7E02C039F88A.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "simulator_screenshot_9A201DE2-708D-48C1-A71F-7E02C039F88A.png"; sourceTree = "<group>"; };
 		04EC47032989241500CD1457 /* simulator_screenshot_10B5A77B-C026-4C7B-8F38-389DBDD623D2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "simulator_screenshot_10B5A77B-C026-4C7B-8F38-389DBDD623D2.png"; sourceTree = "<group>"; };
 		04EC47052989242600CD1457 /* simulator_screenshot_F1AE5C7F-326A-4CBB-A707-03C1BE70C701.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "simulator_screenshot_F1AE5C7F-326A-4CBB-A707-03C1BE70C701.png"; sourceTree = "<group>"; };
+		04EC4709298A6C7B00CD1457 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		04EC470C298A702A00CD1457 /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,8 +157,9 @@
 		04A5905D298284850041A311 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				04EC470B298A701500CD1457 /* Common */,
 				04A590662982A1CC0041A311 /* Fonts */,
-				04A5904B29827B490041A311 /* MainView.swift */,
+				04A5904B29827B490041A311 /* HomeView.swift */,
 				04A590642982A0AE0041A311 /* HeaderView.swift */,
 				04A5906C2982B6B00041A311 /* SegmentedPicker.swift */,
 				04A5906E2982BF530041A311 /* CustomChartView.swift */,
@@ -167,6 +172,7 @@
 				0446D48F298563D6003BC089 /* FloatingActionButton.swift */,
 				0446D49129856971003BC089 /* CreateCourseView.swift */,
 				0446D49B29879693003BC089 /* YearsListView.swift */,
+				04EC4709298A6C7B00CD1457 /* SearchView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -194,6 +200,14 @@
 				04A590802984157A0041A311 /* Proxima Nova Font-Regular.otf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		04EC470B298A701500CD1457 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				04EC470C298A702A00CD1457 /* EmptyStateView.swift */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -283,16 +297,18 @@
 				0446D48A298511F8003BC089 /* CourseView.swift in Sources */,
 				04A590772983BADF0041A311 /* SemesterInfoView.swift in Sources */,
 				04A590712982C6DA0041A311 /* SemesterRowItem.swift in Sources */,
-				04A5904C29827B490041A311 /* MainView.swift in Sources */,
+				04A5904C29827B490041A311 /* HomeView.swift in Sources */,
 				04A5906F2982BF530041A311 /* CustomChartView.swift in Sources */,
 				0446D48C29854FC5003BC089 /* EditCreateSemesterView.swift in Sources */,
 				04A5906D2982B6B10041A311 /* SegmentedPicker.swift in Sources */,
+				04EC470D298A702A00CD1457 /* EmptyStateView.swift in Sources */,
 				0446D490298563D6003BC089 /* FloatingActionButton.swift in Sources */,
 				04A590632982871E0041A311 /* MainRepo.swift in Sources */,
 				0446D48E29855057003BC089 /* CustomIconBackground.swift in Sources */,
 				04A5905929827BC00041A311 /* Semester.swift in Sources */,
 				04A5904A29827B490041A311 /* CollegeCGPAiosApp.swift in Sources */,
 				04A590732982C73F0041A311 /* GPAProgessBar.swift in Sources */,
+				04EC470A298A6C7B00CD1457 /* SearchView.swift in Sources */,
 				04A590752983AA730041A311 /* MockStubs.swift in Sources */,
 				04A5905C298283320041A311 /* Extensions.swift in Sources */,
 				04A590652982A0AE0041A311 /* HeaderView.swift in Sources */,

@@ -12,7 +12,7 @@ struct CollegeCGPAiosApp: App {
     @StateObject private var mainViewModel: MainViewModel = MainViewModel()
     var body: some Scene {
         WindowGroup {
-           MainView()
+           HomeView()
                 .environmentObject(mainViewModel)
         }
     }

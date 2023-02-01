@@ -10,14 +10,23 @@ import Foundation
 @MainActor
 class MainViewModel: ObservableObject {
     
-    private var allSemesters: [Semester] = []
+    var allSemesters: [Semester] = []
     private var allCourses: [Course] = []
+    @Published var query: String = ""
     
     @Published var currentTab: String = "" {
         didSet {
             mapChartDataAndSetOption()
         }
     }
+    
+    private var trimmedQuery: String {
+        query.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+    var isSearching: Bool {!trimmedQuery.isEmpty}
+    
+    @Published var currentToken: SearchToken = .year
+    @Published var tokens: [SearchToken] = [.year, .semester, .course]
     
     @Published var allYears: [Year] = [] {
         didSet {
@@ -209,6 +218,24 @@ class MainViewModel: ObservableObject {
                 }
             } catch {
                 print(error.localizedDescription)
+            }
+        }
+    }
+}
+extension MainViewModel {
+    enum SearchToken: String, Identifiable {
+        case year = "year"
+        case semester = "semester"
+        case course = "course"
+        
+        var id: Int {
+            switch self {
+            case .year:
+                return 1
+            case .semester:
+                return 2
+            case .course:
+                return 3
             }
         }
     }
