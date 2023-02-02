@@ -107,6 +107,24 @@ class MainViewModel: ObservableObject {
         }
     }
     
+    func deleteSemester(offsets: IndexSet) {
+       // allSemesters.remove(atOffsets: index)
+        allSemesters.enumerated().forEach { index, semester in
+            let contains = offsets.contains(index)
+            if contains {
+                allSemesters.remove(at: index)
+                //update year
+                if var year = getYearById(semester.yearId) {
+                    year.semesters.removeAll(where: {$0.id == semester.id})
+                    saveYear(year)
+                    //optional delete if year has no semester
+                    deleteYearById(year.id)
+                }
+                
+            }
+        }
+    }
+    
     
     private func setOptionXYLabel(xLabel: String, yLabel: String) {
         self.currentOption.xLabel = xLabel
