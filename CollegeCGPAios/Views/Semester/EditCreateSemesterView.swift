@@ -77,14 +77,15 @@ struct EditCreateSemesterView: View {
                         .font(.primaryLarge)
                         .padding(.bottom, 10)
                     //MARK: course list
-                    ForEach(Array(state.courses.enumerated()), id: \.element) { index, course in
+                    ForEach(state.courses.indices.reversed(), id: \.self) { index in
+                        let course = state.courses[index]
                         NavigationLink {
                             CreateCourseView(semesterId: course.semesterId, courseId: course.id)
                         } label: {
                             CourseView(course: course)
                                 .padding(.vertical, 10)
-                            let lastIndex = state.courses.count - 1
-                            Divider().opacity(index == lastIndex ? 0 : 1)
+                            let lastIndex = index == state.courses.count - 1
+                            Divider().opacity(lastIndex ? 0 : 1)
                         }
                         
                     }

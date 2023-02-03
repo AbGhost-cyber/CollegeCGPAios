@@ -16,7 +16,7 @@ struct YearsListView: View {
         NavigationView {
             VStack {
                 List {
-                    ForEach(viewmodel.allYears){ year in
+                    ForEach(viewmodel.allYears.reversed()){ year in
                         Section {
                             ForEach(year.semesters) {semester in
                                 SemesterRowItem(semester: semester) {

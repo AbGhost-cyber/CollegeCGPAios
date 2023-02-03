@@ -185,7 +185,6 @@ class MainViewModel: ObservableObject {
             }
             self.currentChartData = datapoints.filter({$0.value > 0.0})
             setOptionXYLabel(xLabel: "All Courses", yLabel: "Grade")
-            //TODO: add course filter
         default:
             fatalError("\(currentTab) is invalid")
         }

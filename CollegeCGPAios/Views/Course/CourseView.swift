@@ -14,6 +14,7 @@ struct CourseView: View {
         HStack {
             VStack(alignment: .leading, spacing: 8) {
                 Text(course.courseName.capitalized)
+                    .multilineTextAlignment(.leading)
                     .font(.primaryBold)
                     .foregroundColor(Color.primary)
                 Text("\(course.creditHours.twoDecimalStr) credit hours")

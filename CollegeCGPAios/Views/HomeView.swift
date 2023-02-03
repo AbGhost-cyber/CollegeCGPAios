@@ -60,7 +60,7 @@ struct HomeView: View {
                     }.padding(.bottom)
                     
                     //MARK: semester list & year section
-                    ForEach(mainViewModel.allYears.indices.prefix(2), id: \.self) { mIndex in
+                    ForEach(mainViewModel.allYears.indices.reversed().prefix(2), id: \.self) { mIndex in
                         let year = mainViewModel.allYears[mIndex]
                         Section {
                             VStack {

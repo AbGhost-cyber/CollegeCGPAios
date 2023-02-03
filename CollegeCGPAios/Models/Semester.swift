@@ -48,7 +48,7 @@ struct Semester: Codable, Identifiable, Hashable, Equatable {
         if courses.isEmpty {
             return "no course added yet"
         }
-        courses.forEach { course in
+        courses.reversed().forEach { course in
             if list.count < 3 {
                 list.append(course.courseName)
             }
